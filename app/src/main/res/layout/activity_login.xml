@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_header_tb"
+        style="@style/ViewStyle.Shadow.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/login_username_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账号："
+        android:textAppearance="@style/TextAppearance.Normal.Black"
+        app:layout_constraintBottom_toBottomOf="@+id/login_username_et"
+        app:layout_constraintEnd_toStartOf="@+id/login_username_et"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_username_et" />
+
+    <EditText
+        android:id="@+id/login_username_et"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Normal.Black"
+        app:layout_constraintBottom_toTopOf="@+id/login_password_pv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_username_tv"
+        app:layout_constraintTop_toBottomOf="@+id/login_header_tb"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/login_password_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码："
+        android:textAppearance="@style/TextAppearance.Normal.Black"
+        app:layout_constraintBottom_toBottomOf="@+id/login_password_pv"
+        app:layout_constraintEnd_toStartOf="@+id/login_password_pv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_password_pv" />
+
+    <com.zhangwei.zwlibs.baselib.text.PasswordView
+        android:id="@+id/login_password_pv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Normal.Black"
+        app:hideDrawable="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_password_tv"
+        app:layout_constraintTop_toBottomOf="@+id/login_username_et"
+        app:layout_constraintWidth_percent="0.6"
+        app:drawableSize="16dp"/>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_pv"
+        app:layout_constraintWidth_percent="0.8" />
+</androidx.constraintlayout.widget.ConstraintLayout>

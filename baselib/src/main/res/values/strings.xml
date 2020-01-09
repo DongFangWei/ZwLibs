@@ -1,0 +1,8 @@
+<resources>
+    <!-- LoadHolder -->
+    <string name="loading">正在加载···</string>
+    <string name="loaded">亲！已经没有了！</string>
+    <string name="no_data">暂无数据哦~</string>
+    <string name="loaded_fail">加载失败(ｷ｀ﾟДﾟ´)!!!</string>
+    <string name="load_again">重新加载</string>
+</resources>

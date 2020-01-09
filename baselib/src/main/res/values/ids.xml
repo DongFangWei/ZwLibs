@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- navigation -->
+    <item name="navigationIcon" type="id" />
+    <item name="navigationText" type="id" />
+    <item name="navigationBadge" type="id" />
+    <!-- Dialog -->
+    <item name="dialogOkBtn" type="id" />
+    <item name="dialogCancelBtn" type="id" />
+    <!-- Header -->
+    <item name="headerBack" type="id" />
+    <item name="headerMenu" type="id" />
+    <item name="headerTitle" type="id" />
+</resources>

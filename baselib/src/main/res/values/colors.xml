@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF0f8eef</color>
+    <color name="colorPrimaryDark">#FF0074fb</color>
+    <color name="colorAccent">#FF4CD9F8</color>
+    <color name="windowBackground">#FFFCFDFC</color>
+    <color name="windowBackgroundDark">#FFF1F2F1</color>
+    <color name="swipeRefreshColor">#FFFF6666</color>
+
+    <color name="text_gray">#FFBCBCBC</color>
+    <color name="text_darker_gray">#FF9A9A9A</color>
+
+</resources>
