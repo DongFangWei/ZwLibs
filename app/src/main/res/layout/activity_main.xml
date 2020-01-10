@@ -11,7 +11,8 @@
         style="@style/ViewStyle.Shadow.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay" />
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:title="@string/app_name" />
 
     <com.zhangwei.zwlibs.baselib.recycler.AutoRecyclerView
         android:id="@+id/main_list_arv"

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.zhangwei.zwlibs.baselib.recycler.AutoRecyclerView;
@@ -20,6 +22,11 @@ public class MainActivity extends AppCompatActivity implements MainView, AutoRec
     private int page = 1;
     private static final int SIZE = 20;
     private MainAdapter mAdapter;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainView, AutoRec
     @Override
     public void getDataFailure(int code, String msg) {
         mAutoRecyclerView.onLoadComplete(true);
+        mAutoRecyclerView.changeStatus(AutoRecyclerView.Status.STATUS_ERROR);
     }
 
     @Override

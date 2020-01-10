@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.zhangwei.zwlibs.baselib.navigation.HeaderView
         android:id="@+id/login_header_tb"
         style="@style/ViewStyle.Shadow.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Login" />
 
     <TextView
         android:id="@+id/login_username_tv"
@@ -50,18 +51,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.Normal.Black"
-        app:hideDrawable="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toTopOf="@+id/login_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/login_password_tv"
         app:layout_constraintTop_toBottomOf="@+id/login_username_et"
-        app:layout_constraintWidth_percent="0.6"
-        app:drawableSize="16dp"/>
+        app:layout_constraintWidth_percent="0.6" />
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="登录"
+        android:textAppearance="@style/TextAppearance.Larger.Black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

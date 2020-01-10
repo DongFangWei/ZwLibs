@@ -3,14 +3,18 @@ package com.zhangwei.zwlibs.baselib.navigation;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 
 import com.zhangwei.zwlibs.baselib.R;
 
@@ -22,7 +26,7 @@ public class HeaderView extends ViewGroup {
     private ImageView mBackView;
     private TextView mTitleView;
     private ImageView mMenuView;
-    private float mDefaultSize;
+    private int mDefaultSize;
 
     public HeaderView(Context context) {
         this(context, null);
@@ -34,14 +38,14 @@ public class HeaderView extends ViewGroup {
 
     public HeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mDefaultSize = context.getResources().getDimension(R.dimen.actionBarSize);
+        mDefaultSize = context.getResources().getDimensionPixelOffset(R.dimen.actionBarSize);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeaderView, defStyleAttr, 0);
         boolean backShow = a.getBoolean(R.styleable.HeaderView_backShow, false);
-        int backPadding = a.getDimensionPixelOffset(R.styleable.HeaderView_backPadding, 0);
+        int backPadding = a.getDimensionPixelOffset(R.styleable.HeaderView_backPadding, -1);
         Drawable backIcon = a.getDrawable(R.styleable.HeaderView_backIcon);
 
         boolean menuShow = a.getBoolean(R.styleable.HeaderView_menuShow, false);
-        int menuPadding = a.getDimensionPixelOffset(R.styleable.HeaderView_menuPadding, 0);
+        int menuPadding = a.getDimensionPixelOffset(R.styleable.HeaderView_menuPadding, -1);
         Drawable menuIcon = a.getDrawable(R.styleable.HeaderView_menuIcon);
 
         CharSequence title = a.getText(R.styleable.HeaderView_title);
@@ -51,21 +55,34 @@ public class HeaderView extends ViewGroup {
         initTitle(context, title, textColor, textAppearanceRes);
 
         if (backShow) {
+            if (backIcon == null) {
+                backIcon = ContextCompat.getDrawable(context, R.drawable.selector_btn_back);
+            }
             initBackView();
             setBackIcon(backIcon);
-            setBackPadding(backPadding);
+            if (backPadding != -1) {
+                setBackPadding(backPadding);
+            }
         }
 
         if (menuShow) {
+            if (menuIcon == null) {
+                menuIcon = ContextCompat.getDrawable(context, R.drawable.selector_btn_more_vert);
+                if (menuPadding == -1)
+                    menuPadding = context.getResources().getDimensionPixelOffset(R.dimen.spacing_least);
+            }
             initMenuView();
             setMenuIcon(menuIcon);
-            setMenuPadding(menuPadding);
+            if (menuPadding != -1) {
+                setMenuPadding(menuPadding);
+            }
         }
     }
 
     private void initTitle(Context context, CharSequence text, ColorStateList textColor, int textAppearanceRes) {
         mTitleView = new TextView(context);
         mTitleView.setId(R.id.headerTitle);
+        mTitleView.setGravity(Gravity.CENTER);
         if (textAppearanceRes != -1) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 mTitleView.setTextAppearance(textAppearanceRes);
@@ -76,11 +93,15 @@ public class HeaderView extends ViewGroup {
 
         if (textColor != null) {
             mTitleView.setTextColor(textColor);
+        } else {
+            mTitleView.setTextColor(Color.WHITE);
         }
+        mTitleView.setTextSize(20);
 
         if (text != null) {
             mTitleView.setText(text);
         }
+        addView(mTitleView);
     }
 
 
@@ -88,6 +109,7 @@ public class HeaderView extends ViewGroup {
         if (mBackView == null) {
             mBackView = new ImageView(getContext());
             mBackView.setId(R.id.headerBack);
+            addView(mBackView);
         }
     }
 
@@ -124,6 +146,7 @@ public class HeaderView extends ViewGroup {
         if (mMenuView == null) {
             mMenuView = new ImageView(getContext());
             mMenuView.setId(R.id.headerMenu);
+            addView(mMenuView);
         }
     }
 
@@ -163,25 +186,34 @@ public class HeaderView extends ViewGroup {
         final int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         final int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        int sizeMeasureSpec;
-        int size;
-        int titleWidthMeasureSpec;
-        int width;
-        int height;
-        if (heightMode == MeasureSpec.EXACTLY) {
-            height = heightSize;
-            size = height - getPaddingTop() - getPaddingBottom();
-            sizeMeasureSpec = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY);
-        } else {
-            size = (int) mDefaultSize;
-            height = size + getPaddingTop() + getPaddingBottom();
-            sizeMeasureSpec = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY);
-        }
-        if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
-            width = widthSize;
-            titleWidthMeasureSpec = MeasureSpec.makeMeasureSpec(width - getPaddingLeft() - getPaddingRight() - size - size, MeasureSpec.AT_MOST);
-        } else {
+        int size, titleWidth;
 
+        if (heightMode == MeasureSpec.EXACTLY) {
+            size = Math.min(heightSize - getPaddingTop() - getPaddingBottom(), mDefaultSize);
+        } else {
+            size = mDefaultSize;
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(size + getPaddingTop() + getPaddingBottom(), MeasureSpec.EXACTLY);
+        }
+
+        int sizeMeasureSpec = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY);
+        if (widthMode == MeasureSpec.EXACTLY) {
+            titleWidth = widthSize - getPaddingLeft() - getPaddingRight();
+            if (mBackView != null || mMenuView != null) {
+                titleWidth -= size << 1;
+            }
+            int titleWidthMeasureSpec = MeasureSpec.makeMeasureSpec(titleWidth, MeasureSpec.EXACTLY);
+            mTitleView.measure(titleWidthMeasureSpec, sizeMeasureSpec);
+        } else {
+            measureChild(mTitleView, widthMeasureSpec, heightMeasureSpec);
+            titleWidth = mTitleView.getMeasuredWidth();
+            int width = titleWidth + getPaddingLeft() + getPaddingRight();
+            if (mBackView != null) {
+                width += size;
+            }
+            if (mMenuView != null) {
+                width += size;
+            }
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
         }
 
         if (mBackView != null) {
@@ -190,10 +222,29 @@ public class HeaderView extends ViewGroup {
         if (mMenuView != null) {
             mMenuView.measure(sizeMeasureSpec, sizeMeasureSpec);
         }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
+        int height = b - t - getPaddingTop() - getPaddingBottom();
+        int left = getPaddingLeft();
+        int top;
+        int padding = getPaddingTop();
+        if (mBackView != null) {
+            top = ((height - mBackView.getMeasuredHeight()) >> 1) + padding;
+            mBackView.layout(left, top, left = left + mBackView.getMeasuredWidth(),
+                    top + mBackView.getMeasuredHeight());
+        } else if (mMenuView != null) {
+            left = left + mTitleView.getMeasuredHeight();
+        }
+        top = ((height - mTitleView.getMeasuredHeight()) >> 1) + padding;
+        mTitleView.layout(left, top, left = left + mTitleView.getMeasuredWidth(),
+                top + mTitleView.getMeasuredHeight());
+        if (mMenuView != null) {
+            top = ((height - mMenuView.getMeasuredHeight()) >> 1) + padding;
+            mMenuView.layout(left, top, left + mMenuView.getMeasuredWidth(),
+                    top + mMenuView.getMeasuredHeight());
+        }
     }
 }
