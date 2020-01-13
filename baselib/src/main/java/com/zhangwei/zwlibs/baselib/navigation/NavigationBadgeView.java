@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+/**
+ * 导航项的标记View，可以显示数字用来表示未读消息
+ */
 public class NavigationBadgeView extends TextView {
     public NavigationBadgeView(Context context) {
         this(context, null);

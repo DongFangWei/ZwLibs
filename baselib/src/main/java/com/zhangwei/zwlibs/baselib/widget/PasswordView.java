@@ -1,4 +1,4 @@
-package com.zhangwei.zwlibs.baselib.text;
+package com.zhangwei.zwlibs.baselib.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

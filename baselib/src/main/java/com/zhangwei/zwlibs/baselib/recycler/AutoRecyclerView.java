@@ -18,7 +18,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zhangwei.zwlibs.baselib.R;
 
-
+/**
+ * 自动加载的RecyclerView，配合{@link OnLoadListener}与{@link BaseAutoAdapter}使用实现自动加载
+ */
 public class AutoRecyclerView extends SwipeRefreshLayout {
     /* 控件状态 */
     public enum Status {
@@ -115,6 +117,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 设置滑动监听
+     * @param onScrollListener 滑动监听
+     */
     public void setOnScrollListener(AutoRecyclerView.OnScrollListener onScrollListener) {
         this.mOnScrollListener = onScrollListener;
     }
@@ -145,6 +151,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 当数据加载完成时调用本方法，通知控件数据已加载完成
+     * @see #onLoadComplete(boolean, boolean)
+     */
     public void onLoadComplete(boolean isLoadedAll) {
         this.onLoadComplete(isLoadedAll, true);
     }
@@ -174,6 +184,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 状态变更
+     * @param status 变更后的状态{@link Status}
+     */
     public void changeStatus(Status status) {
         if (mStatus != status) {
             if (status == Status.STATUS_NORMAL) {
@@ -302,10 +316,15 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         return mLoadTextNull;
     }
 
-    public void setLoadTextNull(CharSequence mLoadTextNull) {
-        this.mLoadTextNull = mLoadTextNull;
+    /**
+     * 设置加载数据为空时的提示文字
+     *
+     * @param loadTextNull 加载数据为空时的提示文字
+     */
+    public void setLoadTextNull(CharSequence loadTextNull) {
+        this.mLoadTextNull = loadTextNull;
         if (mLoadErrorView != null && mStatus == Status.STATUS_NULL) {
-            mLoadErrorView.setErrText(mLoadTextNull);
+            mLoadErrorView.setErrText(loadTextNull);
         }
     }
 
@@ -313,10 +332,15 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         return mLoadTextError;
     }
 
-    public void setLoadTextError(CharSequence mLoadTextError) {
-        this.mLoadTextError = mLoadTextError;
+    /**
+     * 设置加载出错时的提示文字
+     *
+     * @param loadTextError 加载出错时的提示文字
+     */
+    public void setLoadTextError(CharSequence loadTextError) {
+        this.mLoadTextError = loadTextError;
         if (mLoadErrorView != null && mStatus == Status.STATUS_ERROR) {
-            mLoadErrorView.setErrText(mLoadTextError);
+            mLoadErrorView.setErrText(loadTextError);
         }
     }
 
@@ -324,6 +348,11 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         return mLoadImageNull;
     }
 
+    /**
+     * 设置加载数据为空时提示图片的Resource
+     *
+     * @param loadImageNullResource 加载数据为空时提示图片的Resource
+     */
     public void setLoadImageNullResource(@DrawableRes int loadImageNullResource) {
         if (-1 != loadImageNullResource) {
             this.mLoadImageNull = ContextCompat.getDrawable(getContext(), loadImageNullResource);
@@ -340,7 +369,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 设置加载出错的提示图片的Resource
      *
-     * @param loadImageErrorResource 加载出错的提示图片
+     * @param loadImageErrorResource 加载出错的提示图片的Resource
      */
     public void setLoadImageErrorResource(int loadImageErrorResource) {
         if (-1 != loadImageErrorResource) {
@@ -352,8 +381,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
-    /*
-     * 定义加载接口
+    /**
+     * 加载接口
+     * {@link OnLoadListener#onRefresh} 刷新回调；当组件触发刷新条件时，回调此接口通知监听者
+     * {@link OnLoadListener#onLoad()} 加载更多回调；当组件触发加载更多条件时，回调此接口通知监听者
      */
     public interface OnLoadListener extends OnRefreshListener {
         /**

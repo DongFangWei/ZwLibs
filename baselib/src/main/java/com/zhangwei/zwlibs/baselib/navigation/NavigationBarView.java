@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 /**
+ * 导航栏
  * Created by zhangwei on 2018/11/21.
  */
-
 public class NavigationBarView extends LinearLayout implements View.OnClickListener {
     private View mSelectedView;
     private OnSelectedListener listener;

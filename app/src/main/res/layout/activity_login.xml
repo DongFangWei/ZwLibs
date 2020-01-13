@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_password_pv" />
 
-    <com.zhangwei.zwlibs.baselib.text.PasswordView
+    <com.zhangwei.zwlibs.baselib.widget.PasswordView
         android:id="@+id/login_password_pv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
