@@ -1,4 +1,4 @@
-package com.zhangwei.zwlibs.baselib.navigation;
+package com.zhangwei.zwlibs.baselib.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

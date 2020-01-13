@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zhangwei.zwlibs.baselib.navigation.HeaderView
+    <com.zhangwei.zwlibs.baselib.widget.HeaderView
         android:id="@+id/login_header_tb"
         style="@style/ViewStyle.Shadow.Toolbar"
         android:layout_width="match_parent"
