@@ -288,10 +288,13 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             if (mLoadButtonBackground != null) {
                 mLoadErrorView.setBtnBackground(mLoadButtonBackground);
             }
-            mLoadErrorView.setBtnOnClickListener(v -> {
-                if (mOnLoadListener != null) {
-                    setRefreshing(true);
-                    mOnLoadListener.onRefresh();
+            mLoadErrorView.setBtnOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnLoadListener != null) {
+                        setRefreshing(true);
+                        mOnLoadListener.onRefresh();
+                    }
                 }
             });
             this.addView(mLoadErrorView);
