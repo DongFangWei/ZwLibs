@@ -1,4 +1,4 @@
-package com.zhangwei.zwlibs.baselib.navigation;
+package com.zhangwei.zwlibs.baselib.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,18 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 /**
- * 导航项的标记View，可以显示数字用来表示未读消息
+ * 标记View，可以显示数字用来表示未读消息
  */
-public class NavigationBadgeView extends TextView {
-    public NavigationBadgeView(Context context) {
+public class BadgeView extends TextView {
+    public BadgeView(Context context) {
         this(context, null);
     }
 
-    public NavigationBadgeView(Context context, @Nullable AttributeSet attrs) {
+    public BadgeView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, android.R.attr.textViewStyle);
     }
 
-    public NavigationBadgeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public BadgeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setTextSize(10);
         setTextColor(0xFFFFFFFF);

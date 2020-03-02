@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.1.0"
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,7 +28,7 @@ android {
         userOrg = 'dongfangwei'      //bintray注册的用户名
         groupId = 'com.dongfangwei'  //compile引用时的第1部分groupId
         artifactId = 'zwlibs-base'   //compile引用时的第2部分项目名
-        publishVersion = '1.0.0'     //compile引用时的第3部分版本号
+        publishVersion = '1.1.0'     //compile引用时的第3部分版本号
         desc = 'This is a library'  //项目描述
         website = 'https://github.com/DongFangWei/ZwLibs' //github 托管地址
     }
@@ -46,5 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

@@ -17,6 +17,7 @@ import androidx.annotation.ColorInt;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.zhangwei.zwlibs.baselib.R;
+import com.zhangwei.zwlibs.baselib.widget.BadgeView;
 
 
 /**
@@ -24,10 +25,10 @@ import com.zhangwei.zwlibs.baselib.R;
  * Created by zhangwei on 2018/1/24.
  */
 
-public class NavigationItemView extends ViewGroup {
+public class NavigationItem extends ViewGroup {
     private ImageView mIconV;
     private TextView mTextV;
-    private NavigationBadgeView mBadgeV;
+    private BadgeView mBadgeV;
     private int mVerticalMargin;
     private int mIconPadding;
     private int mMaxBadgeNum;//badge的最大数值，默认99
@@ -35,25 +36,25 @@ public class NavigationItemView extends ViewGroup {
     private int mBadgeColor;
     private ColorStateList mBadgeTextColor;
 
-    public NavigationItemView(Context context) {
+    public NavigationItem(Context context) {
         this(context, 0);
     }
 
-    public NavigationItemView(Context context, int badgeNum) {
+    public NavigationItem(Context context, int badgeNum) {
         super(context);
         initView(context, -1, -1, null, -1, badgeNum);
     }
 
-    public NavigationItemView(Context context, AttributeSet attrs) {
+    public NavigationItem(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public NavigationItemView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NavigationItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationItemView, defStyleAttr, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationItem, defStyleAttr, 0);
         final CharSequence text = a.getText(R.styleable.NavigationItemView_android_text);
         Drawable drawable;
-        final int id = a.getResourceId(R.styleable.NavigationItemView_srcCompat, -1);
+        final int id = a.getResourceId(R.styleable.NavigationItem_srcCompat, -1);
         if (id != -1) {
             drawable = AppCompatResources.getDrawable(context, id);
         } else {
@@ -62,12 +63,12 @@ public class NavigationItemView extends ViewGroup {
         final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItemView_android_textAppearance, -1);
         ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItemView_android_textColor);
         final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItemView_android_textSize, -1);
-        final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItemView_iconSize, -1);
-        final int badgeNum = a.getInteger(R.styleable.NavigationItemView_badgeNum, 0);
-        mIconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItemView_iconPadding, 0);
-        mMaxBadgeNum = a.getInteger(R.styleable.NavigationItemView_maxBadgeNum, 99);
-        mBadgeColor = a.getColor(R.styleable.NavigationItemView_badgeColor, -1);
-        mBadgeTextColor = a.getColorStateList(R.styleable.NavigationItemView_badgeTextColor);
+        final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
+        final int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
+        mIconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
+        mMaxBadgeNum = a.getInteger(R.styleable.NavigationItem_maxBadgeNum, 99);
+        mBadgeColor = a.getColor(R.styleable.NavigationItem_badgeColor, -1);
+        mBadgeTextColor = a.getColorStateList(R.styleable.NavigationItem_badgeTextColor);
 
         a.recycle();
         initView(context, textAppearanceRes, textSize, textColor, iconSize, badgeNum);
@@ -132,7 +133,7 @@ public class NavigationItemView extends ViewGroup {
 
     private void initBadgeView() {
         if (mBadgeV == null) {
-            mBadgeV = new NavigationBadgeView(getContext());
+            mBadgeV = new BadgeView(getContext());
             mBadgeV.setId(R.id.navigationBadge);
             LayoutParams badgeParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             mBadgeV.setLayoutParams(badgeParams);

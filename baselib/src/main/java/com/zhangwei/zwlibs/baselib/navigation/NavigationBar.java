@@ -12,25 +12,25 @@ import androidx.annotation.Nullable;
  * 导航栏
  * Created by zhangwei on 2018/11/21.
  */
-public class NavigationBarView extends LinearLayout implements View.OnClickListener {
+public class NavigationBar extends LinearLayout implements View.OnClickListener {
     private View mSelectedView;
     private OnSelectedListener listener;
 
-    public NavigationBarView(Context context) {
+    public NavigationBar(Context context) {
         this(context, null);
     }
 
-    public NavigationBarView(Context context, @Nullable AttributeSet attrs) {
+    public NavigationBar(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public NavigationBarView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public NavigationBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        if (child instanceof NavigationItemView) {
+        if (child instanceof NavigationItem) {
             super.addView(child, index, params);
             child.setOnClickListener(this);
         } else {
@@ -38,12 +38,12 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
         }
     }
 
-    public void addItem(NavigationItemView navigationItem) {
+    public void addItem(NavigationItem navigationItem) {
         navigationItem.setOnClickListener(this);
         addView(navigationItem);
     }
 
-    public NavigationItemView getNavigationItem(String key) {
+    public NavigationItem getNavigationItem(String key) {
         return this.findViewWithTag(key);
     }
 
@@ -68,7 +68,7 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
     public void setItemBadgeNum(int index, int badgeNum) {
         View v = this.getChildAt(index);
         if (v != null) {
-            ((NavigationItemView) v).setBadgeNum(badgeNum);
+            ((NavigationItem) v).setBadgeNum(badgeNum);
         }
     }
 
