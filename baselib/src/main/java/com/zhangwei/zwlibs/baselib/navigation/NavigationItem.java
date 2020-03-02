@@ -52,17 +52,17 @@ public class NavigationItem extends ViewGroup {
     public NavigationItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationItem, defStyleAttr, 0);
-        final CharSequence text = a.getText(R.styleable.NavigationItemView_android_text);
+        final CharSequence text = a.getText(R.styleable.NavigationItem_android_text);
         Drawable drawable;
         final int id = a.getResourceId(R.styleable.NavigationItem_srcCompat, -1);
         if (id != -1) {
             drawable = AppCompatResources.getDrawable(context, id);
         } else {
-            drawable = a.getDrawable(R.styleable.NavigationItemView_android_src);
+            drawable = a.getDrawable(R.styleable.NavigationItem_android_src);
         }
-        final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItemView_android_textAppearance, -1);
-        ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItemView_android_textColor);
-        final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItemView_android_textSize, -1);
+        final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_android_textAppearance, -1);
+        ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
+        final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItem_android_textSize, -1);
         final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
         final int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
         mIconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
