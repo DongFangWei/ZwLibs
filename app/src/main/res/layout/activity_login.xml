@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zhangwei.zwlibs.baselib.widget.HeaderView
+    <com.dongfangwei.zwlibs.base.widget.HeaderView
         android:id="@+id/login_header_tb"
         style="@style/ViewStyle.Shadow.Toolbar"
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_password_pv" />
 
-    <com.zhangwei.zwlibs.baselib.widget.PasswordView
+    <com.dongfangwei.zwlibs.base.widget.PasswordView
         android:id="@+id/login_password_pv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

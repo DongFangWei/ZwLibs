@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.zhangwei.zwlibs.demo"
+        applicationId "com.dongfangwei.zwlibs.demo"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

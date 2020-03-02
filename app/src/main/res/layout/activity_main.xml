@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:title="@string/app_name" />
 
-    <com.zhangwei.zwlibs.baselib.recycler.AutoRecyclerView
+    <com.dongfangwei.zwlibs.base.recycler.AutoRecyclerView
         android:id="@+id/main_list_arv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
