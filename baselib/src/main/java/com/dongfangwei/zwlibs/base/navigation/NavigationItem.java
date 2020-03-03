@@ -171,8 +171,11 @@ public class NavigationItem extends ViewGroup {
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
-//            height = heightSize;
-            throw new RuntimeException("NavigationItem 的高度不能设为固定值");
+            height = heightSize;
+//            throw new RuntimeException("NavigationItem 的高度不能设为固定值");
+            mVerticalMargin = (heightSize - mIconV.getMeasuredHeight() - mIconPadding
+                    - mTextV.getMeasuredHeight() - getPaddingTop() - getPaddingBottom()) >> 2;
+
         } else {
             height = mVerticalMargin + mIconV.getMeasuredHeight() + mIconPadding + mTextV.getMeasuredHeight() + mVerticalMargin + getPaddingTop() + getPaddingBottom();
         }
@@ -185,7 +188,7 @@ public class NavigationItem extends ViewGroup {
         int top = getPaddingTop();
         int width = r - l - getPaddingLeft() - getPaddingRight();
 
-        int iconTop = top + mVerticalMargin + 2;
+        int iconTop = top + mVerticalMargin + 1;
         int iconLeft = (width - mIconV.getMeasuredWidth()) / 2;
         int iconBottom = iconTop + mIconV.getMeasuredHeight();
         int iconRight = iconLeft + mIconV.getMeasuredWidth();
