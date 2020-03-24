@@ -19,6 +19,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import com.dongfangwei.zwlibs.base.R;
 import com.dongfangwei.zwlibs.base.widget.BadgeView;
 
+import java.util.Locale;
+
 
 /**
  * 导航栏的导航项
@@ -258,7 +260,7 @@ public class NavigationItem extends ViewGroup {
             if (mBadgeV.getVisibility() != View.VISIBLE) {
                 mBadgeV.setVisibility(View.VISIBLE);
             }
-            mBadgeV.setText(num > mMaxBadgeNum ? String.format("%d+", mMaxBadgeNum) : String.valueOf(num));
+            mBadgeV.setText(num > mMaxBadgeNum ? String.format(Locale.getDefault(), "%d+", mMaxBadgeNum) : String.valueOf(num));
         } else {
             hideBadge();
         }

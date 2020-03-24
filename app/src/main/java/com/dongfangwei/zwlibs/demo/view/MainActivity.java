@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainView, AutoRec
         mAutoRecyclerView = findViewById(R.id.main_list_arv);
         mAutoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAutoRecyclerView.setOnLoadListener(this);
-        mAutoRecyclerView.addItemDecoration(new LinearDivider(LinearDivider.VERTICAL));
+        mAutoRecyclerView.addItemDecoration(new LinearDivider());
         mAdapter = new MainAdapter(this);
         mAutoRecyclerView.setAdapter(mAdapter);
     }

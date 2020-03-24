@@ -3,14 +3,10 @@
     <!-- Base application theme. -->
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarSize">@dimen/actionBarSize</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
-        <!--<item name="android:fontFamily">@font/fzktjw</item>-->
     </style>
 
     <!-- 使用style方式定义activity切换动画 -->
@@ -42,16 +38,10 @@
         <item name="loadTextColor">#FF666666</item>
         <item name="loadImageNull">@drawable/ic_load_error</item>
         <item name="loadImageError">@drawable/ic_load_error</item>
-        <!--<item name="loadButtonTextColor"></item>-->
-        <!--<item name="loadButtonBackground"></item>-->
-        <!--<item name="swipeRefreshColor">@color/swipeRefreshColor</item>-->
+        <item name="swipeRefreshColor">@color/swipeRefreshColor</item>
     </style>
 
     <style name="ViewStyle.Shadow" parent="" />
-
-    <style name="ViewStyle.Shadow.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
-    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
