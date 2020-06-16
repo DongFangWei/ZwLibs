@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="statusBarColor">#00574B</color>
+    <!--  navigation  -->
+    <color name="navi_selected_unpressed">#FF55BBEE</color>
+    <color name="navi_selected_pressed">#FF66ccff</color>
+    <color name="navi_not_select_unpressed">#FF696969</color>
+    <color name="navi_not_select_pressed">#FF898989</color>
 </resources>

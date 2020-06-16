@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.dongfangwei.zwlibs.base.R;
@@ -38,7 +39,7 @@ public class HeaderView extends ViewGroup {
     public HeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mDefaultSize = context.getResources().getDimensionPixelOffset(R.dimen.actionBarSize);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeaderView, defStyleAttr, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeaderView, defStyleAttr, R.style.Base_HeaderView);
         boolean backShow = a.getBoolean(R.styleable.HeaderView_backShow, false);
         int backPadding = a.getDimensionPixelOffset(R.styleable.HeaderView_backPadding, -1);
         Drawable backIcon = a.getDrawable(R.styleable.HeaderView_backIcon);
@@ -51,7 +52,16 @@ public class HeaderView extends ViewGroup {
         ColorStateList textColor = a.getColorStateList(R.styleable.HeaderView_titleTextColor);
         final int textAppearanceRes = a.getResourceId(R.styleable.HeaderView_titleTextAppearance, -1);
         a.recycle();
-        initTitle(context, title, textColor, textAppearanceRes);
+        initTitleView();
+        if (title != null) {
+            setTitle(title);
+        }
+        setTitleTextAppearance(textAppearanceRes);
+
+        if (textColor != null) {
+            setTitleColor(textColor);
+        }
+
 
         if (backShow) {
             if (backIcon == null) {
@@ -78,10 +88,30 @@ public class HeaderView extends ViewGroup {
         }
     }
 
-    private void initTitle(Context context, CharSequence text, ColorStateList textColor, int textAppearanceRes) {
-        mTitleView = new TextView(context);
+    private void initTitleView() {
+        mTitleView = new TextView(getContext());
         mTitleView.setId(R.id.headerTitle);
         mTitleView.setGravity(Gravity.CENTER);
+        addView(mTitleView);
+    }
+
+    public void setTitle(int titleRes) {
+        mTitleView.setText(titleRes);
+    }
+
+    public void setTitle(CharSequence title) {
+        mTitleView.setText(title);
+    }
+
+    public void setTitleColor(int textColor) {
+        mTitleView.setTextColor(textColor);
+    }
+
+    public void setTitleColor(ColorStateList textColor) {
+        mTitleView.setTextColor(textColor);
+    }
+
+    public void setTitleTextAppearance(int textAppearanceRes) {
         if (textAppearanceRes != -1) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 mTitleView.setTextAppearance(textAppearanceRes);
@@ -89,20 +119,7 @@ public class HeaderView extends ViewGroup {
                 mTitleView.setTextAppearance(getContext(), textAppearanceRes);
             }
         }
-
-        if (textColor != null) {
-            mTitleView.setTextColor(textColor);
-        } else {
-            mTitleView.setTextColor(Color.WHITE);
-        }
-        mTitleView.setTextSize(20);
-
-        if (text != null) {
-            mTitleView.setText(text);
-        }
-        addView(mTitleView);
     }
-
 
     private void initBackView() {
         if (mBackView == null) {
@@ -175,6 +192,18 @@ public class HeaderView extends ViewGroup {
     public void setMenuPadding(int padding) {
         if (mMenuView != null) {
             mMenuView.setPadding(padding, padding, padding, padding);
+        }
+    }
+
+    public void setBackOnClickListener(@Nullable OnClickListener clickListener) {
+        if (mBackView != null) {
+            mBackView.setOnClickListener(clickListener);
+        }
+    }
+
+    public void setMenuOnClickListener(@Nullable OnClickListener clickListener) {
+        if (mMenuView != null) {
+            mMenuView.setOnClickListener(clickListener);
         }
     }
 

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ZwLibs</string>
+    <string name="home">主页</string>
+    <string name="user">用户</string>
+    <!--  login  -->
+    <string name="login_hint_username">请输入用户名</string>
+    <string name="login_hint_password">请输入密码</string>
+
+    <!--  GradientSeekBar  -->
+    <string name="progress_text_format">"%s%%\n单灯亮度"</string>
 </resources>

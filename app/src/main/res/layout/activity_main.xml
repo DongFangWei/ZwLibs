@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".modules.main.view.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_header_tb"
@@ -14,32 +14,41 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:title="@string/app_name" />
 
-    <com.dongfangwei.zwlibs.base.recycler.AutoRecyclerView
-        android:id="@+id/main_list_arv"
+    <FrameLayout
+        android:id="@+id/main_fragment_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/main_navigation_nb"
         android:layout_below="@+id/main_header_tb" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_above="@+id/main_navigation_nb"
+        android:background="@drawable/shape_shadow_horizontal_top" />
+
     <com.dongfangwei.zwlibs.base.navigation.NavigationBar
         android:id="@+id/main_navigation_nb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
 
         <com.dongfangwei.zwlibs.base.navigation.NavigationItem
+            android:id="@+id/main_home_ni"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"
-            android:text="主页"
+            android:src="@drawable/selector_home"
+            android:text="@string/home"
             app:badgeNum="2" />
 
         <com.dongfangwei.zwlibs.base.navigation.NavigationItem
+            android:id="@+id/main_user_ni"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"
-            android:text="我的" />
+            android:src="@drawable/selector_user"
+            android:text="@string/user" />
     </com.dongfangwei.zwlibs.base.navigation.NavigationBar>
 </RelativeLayout>

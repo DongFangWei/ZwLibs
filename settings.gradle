@@ -1,2 +1,3 @@
 include ':app', ':baselib'
 rootProject.name='ZwLibs'
+include ':widgetlib'

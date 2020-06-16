@@ -13,8 +13,8 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
     protected Context mContext;
     protected OnItemClickListener mOnItemClickListener;
 
-    public BaseAdapter(Context mContext) {
-        this.mContext = mContext;
+    public BaseAdapter(Context context) {
+        this.mContext = context;
     }
 
     public abstract Object getItemViewData(int position);
@@ -24,7 +24,7 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
         try {
             int position = (int) v.getTag(BaseViewHolder.KEY_POSITION);
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(v, position, getItemViewData(position));
+                mOnItemClickListener.onItemClick(this, v, position);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,10 +42,10 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
         /**
          * 点击回调
          *
+         * @param adapter  被点击的view对应的适配器
          * @param view     被点击的view
          * @param position 被点击的view的下标
-         * @param data     被点击的view绑定的数据
          */
-        void onItemClick(View view, int position, Object data);
+        void onItemClick(BaseAdapter adapter, View view, int position);
     }
 }

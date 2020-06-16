@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.dongfangwei.zwlibs.demo.view.LoginActivity">
+        <!--        <activity android:name=".modules.main.view.LoginActivity">-->
+        <activity android:name=".modules.widget.WidgetActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.dongfangwei.zwlibs.demo.view.MainActivity" />
+        <activity android:name=".modules.main.view.MainActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleProgressBar">
+        <attr name="android:progress" />
+        <attr name="android:max" />
+        <attr name="android:gravity" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="showText" format="boolean" />
+        <attr name="progressBackground" format="color|reference" />
+        <attr name="progressColor" format="color|reference" />
+        <attr name="progressWidth" format="dimension|reference" />
+        <attr name="progressType" format="enum">
+            <enum name="circle" value="0x00000001" />
+            <enum name="arc" value="0x00000010" />
+        </attr>
+        <attr name="startAngle" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleSeekBar">
+        <attr name="thumb" format="reference" />
+        <attr name="thumbSize" format="dimension|reference" />
+    </declare-styleable>
+</resources>

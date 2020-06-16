@@ -62,8 +62,8 @@ public class NavigationItem extends ViewGroup {
         } else {
             drawable = a.getDrawable(R.styleable.NavigationItem_android_src);
         }
-        final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_android_textAppearance, -1);
-        ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
+        final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_textAppearance, -1);
+        final ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
         final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItem_android_textSize, -1);
         final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
         final int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
@@ -100,11 +100,12 @@ public class NavigationItem extends ViewGroup {
         mTextV.setGravity(Gravity.CENTER_HORIZONTAL);
         if (textAppearanceRes != -1) {
             if (textColor == null) {
-                mTextV.setTextColor(new ColorStateList(new int[][]{{android.R.attr.state_selected}, {-android.R.attr.state_selected}}, new int[]{0xFFE4393C, 0xFF666666}));
+                mTextV.setTextColor(getDefaultColor());
             }
             if (textSize == -1) {
                 mTextV.setTextSize(12);
             }
+
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 mTextV.setTextAppearance(textAppearanceRes);
             } else {
@@ -120,7 +121,7 @@ public class NavigationItem extends ViewGroup {
             }
         } else {
             if (textColor == null) {
-                textColor = new ColorStateList(new int[][]{{android.R.attr.state_selected}, {-android.R.attr.state_selected}}, new int[]{0xFFE4393C, 0xFF666666});
+                textColor = getDefaultColor();
             }
             mTextV.setTextColor(textColor);
             if (textSize == -1) {
@@ -149,6 +150,17 @@ public class NavigationItem extends ViewGroup {
 
             addView(mBadgeV);
         }
+    }
+
+    private ColorStateList getDefaultColor() {
+        return new ColorStateList(
+                new int[][]{
+                        {android.R.attr.state_selected, android.R.attr.state_pressed},
+                        {android.R.attr.state_selected, -android.R.attr.state_pressed},
+                        {-android.R.attr.state_selected, android.R.attr.state_pressed},
+                        {-android.R.attr.state_selected, -android.R.attr.state_pressed}
+                },
+                new int[]{0xFFD4292C, 0xFFE4393C, 0xFFA8A8A8, 0xFF666666});
     }
 
     @Override
