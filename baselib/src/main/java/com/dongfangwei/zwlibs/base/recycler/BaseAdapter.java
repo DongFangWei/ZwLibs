@@ -20,11 +20,11 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
     public abstract Object getItemViewData(int position);
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         try {
-            int position = (int) v.getTag(BaseViewHolder.KEY_POSITION);
+            int position = (int) view.getTag(BaseViewHolder.KEY_POSITION);
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(this, v, position);
+                mOnItemClickListener.onItemClick(this, view, position);
             }
         } catch (Exception e) {
             e.printStackTrace();

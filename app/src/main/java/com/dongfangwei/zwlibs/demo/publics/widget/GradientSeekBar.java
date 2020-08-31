@@ -91,7 +91,7 @@ public class GradientSeekBar extends CircleSeekBar {
         Paint paint = getPaint();
         paint.setStyle(Paint.Style.STROKE);
         float r = mRadius + bgCircleSize1 - ((bgCircleSize1 - getProgressWidth()) / 2);
-        paint.setColor(0x12BFBFBF);
+        paint.setColor(0x32BFBFBF);
         paint.setStrokeWidth(bgCircleSize1);
         canvas.drawCircle(mCentre.x, mCentre.y, r, paint);
 
@@ -101,7 +101,7 @@ public class GradientSeekBar extends CircleSeekBar {
         canvas.drawCircle(mCentre.x, mCentre.y, r, paint);
 
         r += bgCircleSize3 - (bgCircleSize3 - bgCircleSize2 >> 1);
-        paint.setColor(0x32BFBFBF);
+        paint.setColor(0x12BFBFBF);
         paint.setStrokeWidth(bgCircleSize3);
         canvas.drawCircle(mCentre.x, mCentre.y, r, paint);
 

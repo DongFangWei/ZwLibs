@@ -22,22 +22,40 @@ import com.dongfangwei.zwlibs.base.R;
  * 自动加载的RecyclerView，配合{@link OnLoadListener}与{@link BaseAutoAdapter}使用实现自动加载
  */
 public class AutoRecyclerView extends SwipeRefreshLayout {
-    /* 控件状态 */
-    public enum Status {
-        /* 控件状态 */
-        STATUS_NORMAL, STATUS_NULL, STATUS_ERROR
-    }
+    /* 加载状态 */
+    /**
+     * 空闲
+     *
+     * @see #onLoadComplete(boolean)
+     */
+    static final int LOAD_STATE_IDLE = 0;
+    /**
+     * 加载中
+     *
+     * @see #isRefreshing()
+     * @see #onLoad()
+     */
+    static final int LOAD_STATE_LOADING = 1;
+    /**
+     * 加载完成（已经加载完了全部数据）
+     *
+     * @see #onLoadComplete(boolean)
+     */
+    static final int LOAD_STATE_LOADED = 2;
+    /**
+     * 加载出错（没有成功加载数据，并不是没有数据可加载）
+     *
+     * @see #onLoadError()
+     */
+    static final int LOAD_STATE_ERROR = 4;
 
-    // 判断是否正在加载
-    private boolean mIsLoading = false;
     // 开启或者关闭加载更多功能
     private boolean mEnableLoad = false;
-    //是否加载完全部
-    private boolean mIsLoadedAll = false;
+    //当前加载状态
+    private int mLoadState = LOAD_STATE_IDLE;
     //刷新完成是否自动回到顶部
     private boolean mAutoToFirst = true;
 
-    private Status mStatus = Status.STATUS_NORMAL;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private BaseAutoAdapter mAdapter;
@@ -119,6 +137,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
 
     /**
      * 设置滑动监听
+     *
      * @param onScrollListener 滑动监听
      */
     public void setOnScrollListener(AutoRecyclerView.OnScrollListener onScrollListener) {
@@ -128,7 +147,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-            if (mEnableLoad && !mIsLoading && !mIsLoadedAll
+            if (mEnableLoad && mLoadState == LOAD_STATE_IDLE
                     && newState == RecyclerView.SCROLL_STATE_IDLE
                     && mLayoutManager != null && recyclerView.getAdapter() != null
                     && mLayoutManager.findLastVisibleItemPosition() >= recyclerView.getAdapter().getItemCount() - 2) {
@@ -145,7 +164,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     };
 
     private void onLoad() {
-        mIsLoading = true;
+        mLoadState = LOAD_STATE_LOADING;
         if (mOnLoadListener != null) {
             mOnLoadListener.onLoad();
         }
@@ -153,28 +172,14 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
 
     /**
      * 当数据加载完成时调用本方法，通知控件数据已加载完成
-     * @see #onLoadComplete(boolean, boolean)
+     * 控件将刷新显示内容
+     *
+     * @param isLoadedAll 是否加载完所有数据
      */
     public void onLoadComplete(boolean isLoadedAll) {
-        this.onLoadComplete(isLoadedAll, true);
-    }
+        mLoadState = isLoadedAll ? LOAD_STATE_LOADED : LOAD_STATE_IDLE;
 
-    /**
-     * 当数据加载完成时调用本方法，通知控件数据已加载完成
-     *
-     * @param isLoadedAll      是否加载完所有数据
-     * @param isRefreshAdapter 是否刷新适配器
-     */
-    public void onLoadComplete(boolean isLoadedAll, boolean isRefreshAdapter) {
-        mIsLoading = false;
-        mIsLoadedAll = isLoadedAll;
-
-        if (mAdapter != null) {
-            mAdapter.setLoadedAll(isLoadedAll);
-            if (isRefreshAdapter) {
-                mAdapter.notifyDataSetChanged();
-            }
-        }
+        onChangeStatus();
 
         if (isRefreshing()) {
             if (mAutoToFirst) {
@@ -185,31 +190,40 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     }
 
     /**
-     * 状态变更
-     * @param status 变更后的状态{@link Status}
+     * 当数据加载出错试调用本方法
      */
-    public void changeStatus(Status status) {
-        if (mStatus != status) {
-            if (status == Status.STATUS_NORMAL) {
-                showRecyclerView();
-                hideLoadErrorView();
-            } else {
-                if (mAdapter == null || mAdapter.getItemCount() == 0) {
-                    hideRecyclerView();
-                    showLoadErrorView();
-                    if (status == Status.STATUS_NULL) {
-                        mLoadErrorView.setErrText(mLoadTextNull);
-                        mLoadErrorView.setImageDrawable(mLoadImageNull);
-                    } else {
-                        mLoadErrorView.setErrText(mLoadTextError);
-                        mLoadErrorView.setImageDrawable(mLoadImageError);
-                    }
-                }
-            }
-            mStatus = status;
+    public void onLoadError() {
+        mLoadState = LOAD_STATE_ERROR;
+        onChangeStatus();
+        if (isRefreshing()) {
+            setRefreshing(false);
         }
     }
 
+    /**
+     * 根据状态变更显示
+     */
+    private void onChangeStatus() {
+        if (isNullData()) {
+            hideRecyclerView();
+            showLoadErrorView();
+            if (mLoadState == LOAD_STATE_ERROR) {
+                mLoadErrorView.setErrText(mLoadTextError);
+                mLoadErrorView.setImageDrawable(mLoadImageError);
+            } else {
+                mLoadErrorView.setErrText(mLoadTextNull);
+                mLoadErrorView.setImageDrawable(mLoadImageNull);
+            }
+        } else {
+            showRecyclerView();
+            hideLoadErrorView();
+            mAdapter.setLoadedState(mLoadState);
+        }
+    }
+
+    private boolean isNullData() {
+        return mAdapter == null || mAdapter.getItemCount() == 0;
+    }
 
     /************get set*************/
 
@@ -221,6 +235,13 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         if (adapter != null) {
             mAdapter = adapter;
             mAdapter.setShowLoadView(mEnableLoad);
+            mAdapter.setOnReloadListener(new BaseAutoAdapter.OnReloadListener() {
+                @Override
+                public boolean onClickReLoad() {
+                    onLoad();
+                    return true;
+                }
+            });
             mRecyclerView.setAdapter(adapter);
         }
     }
@@ -255,7 +276,6 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             this.mLayoutManager = (LinearLayoutManager) layoutManager;
         }
         mRecyclerView.setLayoutManager(layoutManager);
-
     }
 
     public void setOnLoadListener(OnLoadListener onLoadListener) {
@@ -326,7 +346,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
      */
     public void setLoadTextNull(CharSequence loadTextNull) {
         this.mLoadTextNull = loadTextNull;
-        if (mLoadErrorView != null && mStatus == Status.STATUS_NULL) {
+        if (mLoadErrorView != null && isNullData()) {
             mLoadErrorView.setErrText(loadTextNull);
         }
     }
@@ -342,7 +362,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
      */
     public void setLoadTextError(CharSequence loadTextError) {
         this.mLoadTextError = loadTextError;
-        if (mLoadErrorView != null && mStatus == Status.STATUS_ERROR) {
+        if (mLoadErrorView != null && mLoadState == LOAD_STATE_ERROR) {
             mLoadErrorView.setErrText(loadTextError);
         }
     }
@@ -377,7 +397,6 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     public void setLoadImageErrorResource(int loadImageErrorResource) {
         if (-1 != loadImageErrorResource) {
             this.mLoadImageError = ContextCompat.getDrawable(getContext(), loadImageErrorResource);
-            ;
             if (mLoadErrorView != null) {
                 mLoadErrorView.setImageDrawable(mLoadImageError);
             }

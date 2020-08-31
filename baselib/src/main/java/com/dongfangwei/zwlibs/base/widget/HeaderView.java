@@ -3,7 +3,6 @@ package com.dongfangwei.zwlibs.base.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -24,8 +23,12 @@ import com.dongfangwei.zwlibs.base.R;
  */
 public class HeaderView extends ViewGroup {
     private ImageView mBackView;
+    private int mBackPadding = -1;
+    private Drawable mBackDrawable;
     private TextView mTitleView;
     private ImageView mMenuView;
+    private int mMenuPadding = -1;
+    private Drawable mMenuDrawable;
     private int mDefaultSize;
 
     public HeaderView(Context context) {
@@ -125,6 +128,12 @@ public class HeaderView extends ViewGroup {
         if (mBackView == null) {
             mBackView = new ImageView(getContext());
             mBackView.setId(R.id.headerBack);
+            if (mBackPadding != -1) {
+                mBackView.setPadding(mBackPadding, mBackPadding, mBackPadding, mBackPadding);
+            }
+            if (mBackDrawable != null) {
+                mBackView.setImageDrawable(mBackDrawable);
+            }
             addView(mBackView);
         }
     }
@@ -144,17 +153,19 @@ public class HeaderView extends ViewGroup {
         if (mBackView != null) {
             mBackView.setImageDrawable(backIcon);
         }
+        mBackDrawable = backIcon;
     }
 
     public void setBackIcon(@DrawableRes int resId) {
-        if (mBackView != null) {
-            mBackView.setImageResource(resId);
-        }
+        setBackIcon(ContextCompat.getDrawable(getContext(), resId));
     }
 
     public void setBackPadding(int padding) {
-        if (mBackView != null) {
-            mBackView.setPadding(padding, padding, padding, padding);
+        if (mBackPadding != padding) {
+            if (mBackView != null) {
+                mBackView.setPadding(padding, padding, padding, padding);
+            }
+            mBackPadding = padding;
         }
     }
 
@@ -162,6 +173,12 @@ public class HeaderView extends ViewGroup {
         if (mMenuView == null) {
             mMenuView = new ImageView(getContext());
             mMenuView.setId(R.id.headerMenu);
+            if (mMenuPadding != -1) {
+                mMenuView.setPadding(mMenuPadding, mMenuPadding, mMenuPadding, mMenuPadding);
+            }
+            if (mMenuDrawable != null) {
+                mMenuView.setImageDrawable(mMenuDrawable);
+            }
             addView(mMenuView);
         }
     }
@@ -177,21 +194,23 @@ public class HeaderView extends ViewGroup {
         }
     }
 
-    public void setMenuIcon(Drawable backIcon) {
+    public void setMenuIcon(Drawable menuIcon) {
         if (mMenuView != null) {
-            mMenuView.setImageDrawable(backIcon);
+            mMenuView.setImageDrawable(menuIcon);
         }
+        mMenuDrawable = menuIcon;
     }
 
     public void setMenuIcon(@DrawableRes int resId) {
-        if (mMenuView != null) {
-            mMenuView.setImageResource(resId);
-        }
+        setMenuIcon(ContextCompat.getDrawable(getContext(), resId));
     }
 
     public void setMenuPadding(int padding) {
-        if (mMenuView != null) {
-            mMenuView.setPadding(padding, padding, padding, padding);
+        if (mMenuPadding != padding) {
+            if (mMenuView != null) {
+                mMenuView.setPadding(padding, padding, padding, padding);
+            }
+            mMenuPadding = padding;
         }
     }
 

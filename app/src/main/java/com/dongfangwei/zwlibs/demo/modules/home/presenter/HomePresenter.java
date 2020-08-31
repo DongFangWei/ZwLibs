@@ -35,7 +35,9 @@ public class HomePresenter implements IHomePresenter {
 
     @Override
     public void getDataError(Throwable e) {
-
+        if (view != null) {
+            view.getDataFailure(233, e.getMessage());
+        }
     }
 
     @Override

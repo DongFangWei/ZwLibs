@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements IHomeView, AutoRecyclerVie
             }
         });
         mAutoRecyclerView.setAdapter(mAdapter);
+        mAutoRecyclerView.setRefreshing(true);
         getData();
     }
 
@@ -80,8 +81,8 @@ public class HomeFragment extends Fragment implements IHomeView, AutoRecyclerVie
 
     @Override
     public void getDataFailure(int code, String msg) {
-        mAutoRecyclerView.onLoadComplete(true);
-        mAutoRecyclerView.changeStatus(AutoRecyclerView.Status.STATUS_ERROR);
+        page++;
+        mAutoRecyclerView.onLoadError();
     }
 
     @Override

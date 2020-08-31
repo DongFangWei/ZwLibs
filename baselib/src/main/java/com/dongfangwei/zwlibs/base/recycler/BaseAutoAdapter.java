@@ -16,13 +16,17 @@ import com.dongfangwei.zwlibs.base.R;
 
 public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implements View.OnClickListener {
     protected static final int ITEM_TYPE_LOAD = -999;
-    private boolean mIsLoadedAll = false;
+    private int mLoadedState = -1;
     private boolean mIsShowLoadView = true;
 
     @StringRes
+    private int mLoadingRes = R.string.loading;
+    @StringRes
     private int mLoadedRes = R.string.loaded;
     @StringRes
-    private int mLoadingRes = R.string.loading;
+    private int mLoadedFailRes = R.string.load_error_try_again;
+
+    private OnReloadListener mOnReloadListener;
 
     protected BaseAutoAdapter(Context context) {
         super(context);
@@ -47,12 +51,19 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
     public final void onBindViewHolder(@NonNull BaseViewHolder viewHolder, int position) {
         if (viewHolder instanceof LoadHolder) {
             LoadHolder loadHolder = (LoadHolder) viewHolder;
-            if (mIsLoadedAll) {
-                loadHolder.hideProgressBar();
-                loadHolder.setText(mLoadedRes);
-            } else {
-                loadHolder.setText(mLoadingRes);
-                loadHolder.showProgressBar();
+            switch (mLoadedState) {
+                case AutoRecyclerView.LOAD_STATE_LOADED:
+                    loadHolder.hideProgressBar();
+                    loadHolder.setText(mLoadedRes);
+                    break;
+                case AutoRecyclerView.LOAD_STATE_ERROR:
+                    loadHolder.hideProgressBar();
+                    loadHolder.setText(mLoadedFailRes);
+                    break;
+                default:
+                    loadHolder.showProgressBar();
+                    loadHolder.setText(mLoadingRes);
+                    break;
             }
         } else {
             onBindItemView(viewHolder, position);
@@ -74,6 +85,26 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        try {
+            int position = (int) view.getTag(BaseViewHolder.KEY_POSITION);
+            if (position == ITEM_TYPE_LOAD) {
+                if (mLoadedState == AutoRecyclerView.LOAD_STATE_ERROR && mOnReloadListener != null) {
+                    if (mOnReloadListener.onClickReLoad()) {
+                        setLoadedState(AutoRecyclerView.LOAD_STATE_LOADING);
+                    }
+                }
+            } else {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(this, view, position);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     protected abstract BaseViewHolder onCreateItemView(@NonNull ViewGroup parent, int type);
 
     protected abstract void onBindItemView(@NonNull BaseViewHolder holder, int position);
@@ -82,12 +113,11 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
 
     protected abstract int getItemType(int position);
 
-    public boolean isLoadedAll() {
-        return mIsLoadedAll;
-    }
-
-    public void setLoadedAll(boolean isLoadedAll) {
-        this.mIsLoadedAll = isLoadedAll;
+    void setLoadedState(int loadedState) {
+        if (this.mLoadedState != loadedState) {
+            this.mLoadedState = loadedState;
+        }
+        this.notifyDataSetChanged();
     }
 
     public boolean isShowLoadView() {
@@ -108,8 +138,8 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
             this.mLoadingRes = loadingRes;
     }
 
-    public void setOnItemClickListener(BaseAdapter.OnItemClickListener onItemClickListener) {
-        this.mOnItemClickListener = onItemClickListener;
+    void setOnReloadListener(OnReloadListener onReloadListener) {
+        this.mOnReloadListener = onReloadListener;
     }
 
     private LoadHolder createLoadHolder() {
@@ -119,10 +149,13 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
         linearLayout.setLayoutParams(params);
         linearLayout.setPadding(0, dp_10, 0, dp_10);
         linearLayout.setGravity(Gravity.CENTER);
-        return new LoadHolder(linearLayout);
+        LoadHolder loadHolder = new LoadHolder(linearLayout);
+        loadHolder.setOnClickListener(this);
+        loadHolder.setPosition(ITEM_TYPE_LOAD);
+        return loadHolder;
     }
 
-    public class LoadHolder extends BaseViewHolder {
+    public static class LoadHolder extends BaseViewHolder {
         private TextView mTextView;
         private ProgressBar mProgressBar;
 
@@ -130,7 +163,7 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
             super(itemView);
             Context context = itemView.getContext();
             float dp = context.getResources().getDisplayMetrics().density;
-            int barSize = (int) (dp * 36);
+            int barSize = (int) (dp * 24);
             mProgressBar = new ProgressBar(context);
             LinearLayout.LayoutParams barParams = new LinearLayout.LayoutParams(barSize, barSize);
             mProgressBar.setLayoutParams(barParams);
@@ -164,5 +197,17 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
                 mProgressBar.setVisibility(View.GONE);
             }
         }
+    }
+
+    /**
+     * 当加载出错时，点击重试的监听
+     */
+    interface OnReloadListener {
+        /**
+         * 点击重新加载
+         *
+         * @return 是否重新加载
+         */
+        boolean onClickReLoad();
     }
 }

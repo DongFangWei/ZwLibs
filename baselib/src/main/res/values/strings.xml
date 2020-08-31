@@ -5,4 +5,5 @@
     <string name="no_data">暂无数据哦~</string>
     <string name="loaded_fail">加载失败(ｷ｀ﾟДﾟ´)!!!</string>
     <string name="load_again">重新加载</string>
+    <string name="load_error_try_again">加载出错，点击重试</string>
 </resources>
