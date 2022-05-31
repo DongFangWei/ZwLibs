@@ -7,8 +7,14 @@
         <attr name="android:src" />
         <attr name="srcCompat" />
         <attr name="textAppearance" format="reference" />
+        <attr name="iconTextSpacing" format="dimension" />
         <attr name="iconPadding" format="dimension" />
+        <attr name="iconPaddingStart" format="dimension" />
+        <attr name="iconPaddingEnd" format="dimension" />
+        <attr name="iconPaddingTop" format="dimension" />
+        <attr name="iconPaddingBottom" format="dimension" />
         <attr name="iconSize" format="dimension" />
+        <attr name="iconBackground" format="reference" />
         <attr name="badgeNum" format="integer" />
         <attr name="badgeColor" format="color|reference" />
         <attr name="badgeTextColor" format="color|reference" />
@@ -19,6 +25,13 @@
         <attr name="title" />
         <attr name="titleTextColor" />
         <attr name="titleTextAppearance" />
+        <attr name="titleEllipsize">
+            <enum name="none" value="0" />
+            <enum name="start" value="1" />
+            <enum name="middle" value="2" />
+            <enum name="end" value="3" />
+            <enum name="marquee" value="4" />
+        </attr>
         <attr name="backIcon" format="reference" />
         <attr name="backPadding" format="dimension" />
         <attr name="backShow" format="boolean" />

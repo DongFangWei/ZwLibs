@@ -6,7 +6,7 @@
         <attr name="android:gravity" />
         <attr name="android:textSize" />
         <attr name="android:textColor" />
-        <attr name="showText" format="boolean" />
+        <attr name="min" format="integer" />
         <attr name="progressBackground" format="color|reference" />
         <attr name="progressColor" format="color|reference" />
         <attr name="progressWidth" format="dimension|reference" />
@@ -14,6 +14,7 @@
             <enum name="circle" value="0x00000001" />
             <enum name="arc" value="0x00000010" />
         </attr>
+        <attr name="showText" format="boolean" />
         <attr name="startAngle" format="float" />
     </declare-styleable>
 

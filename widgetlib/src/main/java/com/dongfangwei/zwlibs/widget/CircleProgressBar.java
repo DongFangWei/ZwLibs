@@ -38,8 +38,11 @@ public class CircleProgressBar extends View {
     //文字Layout
     private Layout mLayout;
 
-    //进度条的最大进度
+
+    //进度条的最大进度值
     private int mMax;
+    //进度条的最小进度值
+    private int mMin;
     //进度条的进度
     private int mProgress;
 
@@ -88,6 +91,7 @@ public class CircleProgressBar extends View {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleProgressBar, defStyleAttr, 0);
         final int max = a.getInt(R.styleable.CircleProgressBar_android_max, 100);
+        final int min = a.getInt(R.styleable.CircleProgressBar_min, 0);
         final int progress = a.getInt(R.styleable.CircleProgressBar_android_progress, 0);
         final float progressWidth = a.getDimension(R.styleable.CircleProgressBar_progressWidth, 8);
         final int progressColor = a.getColor(R.styleable.CircleProgressBar_progressColor, 0xFF22C434);
@@ -104,6 +108,7 @@ public class CircleProgressBar extends View {
 
         initPaint();
         setMax(max);
+        setMin(min);
         setProgress(progress);
         setProgressWidth(progressWidth);
         setProgressColor(progressColor);
@@ -134,10 +139,23 @@ public class CircleProgressBar extends View {
     }
 
     public void setMax(int max) {
-        if (this.mMax != max) {
+        if (this.mMax != max && this.mMin < max) {
             this.mMax = max;
 
             int progress = Math.min(mProgress, max);
+            refreshProgress(progress, false);
+        }
+    }
+
+    public int getMin() {
+        return mMin;
+    }
+
+    public void setMin(int min) {
+        if (this.mMin != min && min < this.mMax) {
+            this.mMin = Math.max(0, min);
+
+            int progress = Math.max(mProgress, mMin);
             refreshProgress(progress, false);
         }
     }
@@ -163,7 +181,11 @@ public class CircleProgressBar extends View {
      * @return 进度是否改变
      */
     boolean setProgressInternal(int progress, boolean fromUser) {
-        progress = Math.min(progress, mMax);
+        if (progress > mMax) {
+            progress = mMax;
+        } else if (progress < mMin) {
+            progress = mMin;
+        }
         if (progress != mProgress) {
             refreshProgress(progress, fromUser);
             return true;
@@ -252,7 +274,12 @@ public class CircleProgressBar extends View {
      * 刷新进度扫过的角度
      */
     private void refreshProgressAngle() {
-        this.mProgressSweepAngle = mMax == 0 ? 0 : mMaxSweepAngle * mProgress / mMax;
+        if (mProgressType == TYPE_ARC) {
+            int p = mMax - mMin;
+            this.mProgressSweepAngle = p == 0 ? 0 : mMaxSweepAngle * (mProgress - mMin) / p;
+        } else {
+            this.mProgressSweepAngle = mMax == 0 ? 0 : mMaxSweepAngle * mProgress / mMax;
+        }
     }
 
     private void assumeLayout() {
@@ -331,6 +358,12 @@ public class CircleProgressBar extends View {
         return mStartAngle;
     }
 
+    /**
+     * 设置起始角度
+     * 只作用于{@see mProgressType}为{@see TYPE_CIRCLE}时有效
+     *
+     * @param startAngle 起始角度
+     */
     public void setStartAngle(float startAngle) {
         if (mProgressType == TYPE_ARC) {
             this.mStartAngle = START_ANGLE;
@@ -339,6 +372,14 @@ public class CircleProgressBar extends View {
         }
     }
 
+    /**
+     * 指定进度的大小边界
+     *
+     * @param left 左
+     * @param top 上
+     * @param right 右
+     * @param bottom 下
+     */
     protected void onLayoutProgress(int left, int top, int right, int bottom) {
         int paddingLeft = getPaddingLeft();
         int paddingTop = getPaddingTop();
@@ -425,10 +466,12 @@ public class CircleProgressBar extends View {
      */
     protected void drawProgress(Canvas canvas) {
         float angle = mProgressSweepAngle;
-        mPaint.setColor(mProgressColor);
-        mPaint.setStyle(Paint.Style.STROKE);
-        //绘制进度（绘制一条弧线）
-        canvas.drawArc(mProgressRectF, mStartAngle, angle, false, mPaint);
+        if (angle > 0) {
+            mPaint.setColor(mProgressColor);
+            mPaint.setStyle(Paint.Style.STROKE);
+            //绘制进度（绘制一条弧线）
+            canvas.drawArc(mProgressRectF, mStartAngle, angle, false, mPaint);
+        }
     }
 
     /**

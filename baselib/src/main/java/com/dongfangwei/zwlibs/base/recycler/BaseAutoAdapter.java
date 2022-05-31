@@ -28,7 +28,7 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
 
     private OnReloadListener mOnReloadListener;
 
-    protected BaseAutoAdapter(Context context) {
+    public BaseAutoAdapter(Context context) {
         super(context);
     }
 
@@ -85,6 +85,15 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
         }
     }
 
+    /**
+     * 数据是否为空（用于决定是否展示数据为空提示）
+     *
+     * @return 是true
+     */
+    public boolean isEmptyData() {
+        return getItemCount() == 0;
+    }
+
     @Override
     public void onClick(View view) {
         try {
@@ -96,12 +105,22 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
                     }
                 }
             } else {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(this, view, position);
-                }
+                onItemClick(view, position);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 项点击回调方法
+     *
+     * @param view     被点击的View
+     * @param position 项的下标
+     */
+    protected void onItemClick(View view, int position) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(this, view, position);
         }
     }
 

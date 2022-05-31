@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -22,8 +21,10 @@ public class CircleSeekBar extends CircleProgressBar {
     //拖动条改变监听
     private OnSeekBarChangeListener onSeekBarChangeListener;
 
-    //就的角度，用于判断滑动是增加进度还是减少进度
+    //旧的角度，用于判断滑动是增加进度还是减少进度
     private float mOldAngle;
+
+    private boolean mEnabledSeek = true;
 
 
     public CircleSeekBar(Context context) {
@@ -79,6 +80,14 @@ public class CircleSeekBar extends CircleProgressBar {
         }
     }
 
+    public boolean isEnabledSeek() {
+        return mEnabledSeek;
+    }
+
+    public void setEnabledSeek(boolean enabledSeek) {
+        this.mEnabledSeek = enabledSeek;
+    }
+
     @Override
     public void onRefreshProgress(int progress, boolean fromUser) {
         super.onRefreshProgress(progress, fromUser);
@@ -108,42 +117,44 @@ public class CircleSeekBar extends CircleProgressBar {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (isTouchThumb(x, y)) {
-                    setPressed(true);
-                    if (onSeekBarChangeListener != null)
-                        onSeekBarChangeListener.onStartTrackingTouch(this);
-                    return true;
-                } else if (isTouchArc(x, y, 24, 24)) {
-                    int progress = angleToProgress(computeTouchAngle(x, y));
-                    if (getProgressType() == TYPE_CIRCLE || (progress >= 0 && progress <= getMax())) {
-                        setProgress(progress);
+        if (mEnabledSeek && isEnabled()) {
+            float x = event.getX();
+            float y = event.getY();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (isTouchThumb(x, y)) {
                         setPressed(true);
-                        mOldAngle = mStartAngle + mMaxSweepAngle / 2;
                         if (onSeekBarChangeListener != null)
                             onSeekBarChangeListener.onStartTrackingTouch(this);
                         return true;
+                    } else if (isTouchArc(x, y, 24, 24)) {
+                        int progress = angleToProgress(computeTouchAngle(x, y));
+                        if (progress >= getMin() && progress <= getMax()) {
+                            setProgress(progress);
+                            setPressed(true);
+                            mOldAngle = mStartAngle + mMaxSweepAngle / 2;
+                            if (onSeekBarChangeListener != null)
+                                onSeekBarChangeListener.onStartTrackingTouch(this);
+                            return true;
+                        }
                     }
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (isTouchArc(x, y, (int) mRadius >> 1, 64)) {
-                    onTouchMove(computeTouchAngle(x, y));
-                    return true;
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (onSeekBarChangeListener != null)
-                    onSeekBarChangeListener.onStopTrackingTouch(this);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (isTouchArc(x, y, (int) mRadius >> 1, 64)) {
+                        onTouchMove(computeTouchAngle(x, y));
+                        return true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (onSeekBarChangeListener != null)
+                        onSeekBarChangeListener.onStopTrackingTouch(this);
 
-                if (isPressed()) {
-                    setPressed(false);
-                    return true;
-                }
-                break;
+                    if (isPressed()) {
+                        setPressed(false);
+                        return true;
+                    }
+                    break;
+            }
         }
         return super.onTouchEvent(event);
     }

@@ -222,7 +222,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     }
 
     private boolean isNullData() {
-        return mAdapter == null || mAdapter.getItemCount() == 0;
+        return mAdapter == null || mAdapter.isEmptyData();
     }
 
     /************get set*************/

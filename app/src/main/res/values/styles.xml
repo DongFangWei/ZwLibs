@@ -9,4 +9,205 @@
     <style name="ViewStyle.Shadow.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
     </style>
+
+
+    <style name="Base.TextAppearance" parent="" />
+
+    <style name="Base.TextStyle" parent="" />
+
+    <style name="TextAppearance.Tiny" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_tiny</item>
+    </style>
+
+    <style name="TextAppearance.Least" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_least</item>
+    </style>
+
+    <style name="TextAppearance.Smaller" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_smaller</item>
+    </style>
+
+    <style name="TextAppearance.Small" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="TextAppearance.Normal" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="TextAppearance.Large" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_large</item>
+    </style>
+
+    <style name="TextAppearance.Larger" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_larger</item>
+    </style>
+
+    <style name="TextAppearance.Largest" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_largest</item>
+    </style>
+
+    <style name="TextAppearance.Huge" parent="Base.TextAppearance">
+        <item name="android:textSize">@dimen/font_huge</item>
+    </style>
+
+    <style name="TextAppearance.White" parent="Base.TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Black" parent="Base.TextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Gray" parent="Base.TextAppearance">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.DarkerGray" parent="Base.TextAppearance">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Tiny.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Least.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Smaller.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Small.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Normal.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Large.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Larger.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Largest.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Huge.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Tiny.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Least.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Smaller.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Small.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Normal.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Large.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Larger.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Largest.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Huge.Black">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Tiny.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Least.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Smaller.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Small.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Normal.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Large.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Larger.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Largest.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Huge.Gary">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="TextAppearance.Tiny.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Least.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Smaller.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Small.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Normal.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Large.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Larger.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Largest.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.Huge.DarkerGray">
+        <item name="android:textColor">@color/text_darker_gray</item>
+    </style>
 </resources>

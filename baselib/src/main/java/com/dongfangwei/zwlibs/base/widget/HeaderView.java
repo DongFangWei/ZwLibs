@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -22,14 +23,22 @@ import com.dongfangwei.zwlibs.base.R;
  * Created by 张巍 on 2019/5/15.
  */
 public class HeaderView extends ViewGroup {
-    private ImageView mBackView;
+    // Enum for the "ellipsize" XML parameter.
+    private static final int ELLIPSIZE_NOT_SET = -1;
+    private static final int ELLIPSIZE_NONE = 0;
+    private static final int ELLIPSIZE_START = 1;
+    private static final int ELLIPSIZE_MIDDLE = 2;
+    private static final int ELLIPSIZE_END = 3;
+    private static final int ELLIPSIZE_MARQUEE = 4;
+
+    protected ImageView mBackView;
     private int mBackPadding = -1;
     private Drawable mBackDrawable;
-    private TextView mTitleView;
-    private ImageView mMenuView;
+    protected TextView mTitleView;
+    protected ImageView mMenuView;
     private int mMenuPadding = -1;
     private Drawable mMenuDrawable;
-    private int mDefaultSize;
+    protected final int mDefaultSize;
 
     public HeaderView(Context context) {
         this(context, null);
@@ -54,6 +63,7 @@ public class HeaderView extends ViewGroup {
         CharSequence title = a.getText(R.styleable.HeaderView_title);
         ColorStateList textColor = a.getColorStateList(R.styleable.HeaderView_titleTextColor);
         final int textAppearanceRes = a.getResourceId(R.styleable.HeaderView_titleTextAppearance, -1);
+        int titleEllipsize = a.getInt(R.styleable.HeaderView_titleEllipsize, ELLIPSIZE_NOT_SET);
         a.recycle();
         initTitleView();
         if (title != null) {
@@ -65,6 +75,22 @@ public class HeaderView extends ViewGroup {
             setTitleColor(textColor);
         }
 
+        if (titleEllipsize != -1) {
+            switch (titleEllipsize) {
+                case ELLIPSIZE_START:
+                    setTitleEllipsize(TextUtils.TruncateAt.START);
+                    break;
+                case ELLIPSIZE_MIDDLE:
+                    setTitleEllipsize(TextUtils.TruncateAt.MIDDLE);
+                    break;
+                case ELLIPSIZE_END:
+                    setTitleEllipsize(TextUtils.TruncateAt.END);
+                    break;
+                case ELLIPSIZE_MARQUEE:
+                    setTitleEllipsize(TextUtils.TruncateAt.MARQUEE);
+                    break;
+            }
+        }
 
         if (backShow) {
             if (backIcon == null) {
@@ -91,10 +117,12 @@ public class HeaderView extends ViewGroup {
         }
     }
 
-    private void initTitleView() {
+    protected void initTitleView() {
         mTitleView = new TextView(getContext());
         mTitleView.setId(R.id.headerTitle);
         mTitleView.setGravity(Gravity.CENTER);
+        mTitleView.setSingleLine();
+        mTitleView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         addView(mTitleView);
     }
 
@@ -122,6 +150,10 @@ public class HeaderView extends ViewGroup {
                 mTitleView.setTextAppearance(getContext(), textAppearanceRes);
             }
         }
+    }
+
+    public void setTitleEllipsize(TextUtils.TruncateAt where) {
+        mTitleView.setEllipsize(where);
     }
 
     private void initBackView() {
@@ -169,6 +201,10 @@ public class HeaderView extends ViewGroup {
         }
     }
 
+    /**
+     * 设置菜单点击事件
+     * 菜单的id为{@link R.id.headerMenu}
+     */
     private void initMenuView() {
         if (mMenuView == null) {
             mMenuView = new ImageView(getContext());
@@ -183,13 +219,22 @@ public class HeaderView extends ViewGroup {
         }
     }
 
-    public void showMenuView(boolean show) {
+    /**
+     * 菜单按钮是否显示
+     *
+     * @return true：显示，false：不显示
+     */
+    public boolean isShowMenuView() {
+        return mMenuView != null && mMenuView.getVisibility() == VISIBLE;
+    }
+
+    public void setShowMenuView(boolean show) {
         if (show) {
             initMenuView();
             if (mMenuView.getVisibility() != VISIBLE) {
                 mMenuView.setVisibility(VISIBLE);
             }
-        } else if (mMenuView != null && mMenuView.getVisibility() == VISIBLE) {
+        } else if (isShowMenuView()) {
             mMenuView.setVisibility(GONE);
         }
     }

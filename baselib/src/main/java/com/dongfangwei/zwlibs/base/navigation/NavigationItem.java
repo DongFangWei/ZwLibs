@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.dongfangwei.zwlibs.base.R;
@@ -32,7 +33,7 @@ public class NavigationItem extends ViewGroup {
     private TextView mTextV;
     private BadgeView mBadgeV;
     private int mVerticalMargin;
-    private int mIconPadding;
+    private int mIconTextSpacing;
     private int mMaxBadgeNum;//badge的最大数值，默认99
     @ColorInt
     private int mBadgeColor;
@@ -62,12 +63,19 @@ public class NavigationItem extends ViewGroup {
         } else {
             drawable = a.getDrawable(R.styleable.NavigationItem_android_src);
         }
+        final int iconBackgroundRes = a.getResourceId(R.styleable.NavigationItem_iconBackground, -1);
         final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_textAppearance, -1);
         final ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
         final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItem_android_textSize, -1);
         final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
         final int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
-        mIconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
+        final int iconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
+        final int iconPaddingStart = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingStart, iconPadding);
+        final int iconPaddingEnd = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingEnd, iconPadding);
+        final int iconPaddingTop = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingTop, iconPadding);
+        final int iconPaddingBottom = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingBottom, iconPadding);
+
+        mIconTextSpacing = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconTextSpacing, 0);
         mMaxBadgeNum = a.getInteger(R.styleable.NavigationItem_maxBadgeNum, 99);
         mBadgeColor = a.getColor(R.styleable.NavigationItem_badgeColor, -1);
         mBadgeTextColor = a.getColorStateList(R.styleable.NavigationItem_badgeTextColor);
@@ -75,8 +83,12 @@ public class NavigationItem extends ViewGroup {
         a.recycle();
         initView(context, textAppearanceRes, textSize, textColor, iconSize, badgeNum);
         setText(text);
+        setIconPaddingRelative(iconPaddingStart, iconPaddingTop, iconPaddingEnd, iconPaddingBottom);
         if (drawable != null) {
             setImageDrawable(drawable);
+        }
+        if (iconBackgroundRes != -1) {
+            setIconBackgroundResource(iconBackgroundRes);
         }
     }
 
@@ -187,11 +199,11 @@ public class NavigationItem extends ViewGroup {
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
 //            throw new RuntimeException("NavigationItem 的高度不能设为固定值");
-            mVerticalMargin = (heightSize - mIconV.getMeasuredHeight() - mIconPadding
+            mVerticalMargin = (heightSize - mIconV.getMeasuredHeight() - mIconTextSpacing
                     - mTextV.getMeasuredHeight() - getPaddingTop() - getPaddingBottom()) >> 2;
 
         } else {
-            height = mVerticalMargin + mIconV.getMeasuredHeight() + mIconPadding + mTextV.getMeasuredHeight() + mVerticalMargin + getPaddingTop() + getPaddingBottom();
+            height = mVerticalMargin + mIconV.getMeasuredHeight() + mIconTextSpacing + mTextV.getMeasuredHeight() + mVerticalMargin + getPaddingTop() + getPaddingBottom();
         }
 
         setMeasuredDimension(width, height);
@@ -209,7 +221,7 @@ public class NavigationItem extends ViewGroup {
         mIconV.layout(iconLeft, iconTop, iconRight, iconBottom);
 
         int textLeft = (width - mTextV.getMeasuredWidth()) / 2;
-        mTextV.layout(textLeft, iconBottom + mIconPadding, textLeft + mTextV.getMeasuredWidth(), iconBottom + mIconPadding + mTextV.getMeasuredHeight());
+        mTextV.layout(textLeft, iconBottom + mIconTextSpacing, textLeft + mTextV.getMeasuredWidth(), iconBottom + mIconTextSpacing + mTextV.getMeasuredHeight());
 
         if (mBadgeV != null) {
             int w = mBadgeV.getMeasuredWidth();
@@ -228,12 +240,32 @@ public class NavigationItem extends ViewGroup {
         mIconV.setImageResource(resId);
     }
 
-    public int getIconPadding() {
-        return mIconPadding;
+    public void setIconBackground(Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mIconV.setBackground(drawable);
+        } else {
+            mIconV.setBackgroundDrawable(drawable);
+        }
     }
 
-    public void setIconPadding(int mIconPadding) {
-        this.mIconPadding = mIconPadding;
+    public void setIconBackgroundResource(@DrawableRes int resId) {
+        mIconV.setBackgroundResource(resId);
+    }
+
+    public void setIconPaddingRelative(int start, int top, int end, int bottom) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mIconV.setPaddingRelative(start, top, end, bottom);
+        } else {
+            mIconV.setPadding(start, top, end, bottom);
+        }
+    }
+
+    public int getIconTextSpacing() {
+        return mIconTextSpacing;
+    }
+
+    public void setIconTextSpacing(int mIconTextSpacing) {
+        this.mIconTextSpacing = mIconTextSpacing;
         this.postInvalidate();
     }
 
@@ -318,8 +350,9 @@ public class NavigationItem extends ViewGroup {
         }
     }
 
-    public void setSelected(boolean isSelected) {
-        mIconV.setSelected(isSelected);
-        mTextV.setSelected(isSelected);
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+        mIconV.setSelected(selected);
+        mTextV.setSelected(selected);
     }
 }
