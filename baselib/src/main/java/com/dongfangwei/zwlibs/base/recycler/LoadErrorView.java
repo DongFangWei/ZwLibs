@@ -184,6 +184,15 @@ public class LoadErrorView extends ViewGroup {
         }
     }
 
+    /**
+     * 设置按钮的可见性状态
+     *
+     * @param visibility 可见性状态
+     */
+    public void setBtnVisibility(int visibility) {
+        mButton.setVisibility(visibility);
+    }
+
     public void setBtnOnClickListener(OnClickListener clickListener) {
         mButton.setOnClickListener(clickListener);
     }

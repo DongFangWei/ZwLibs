@@ -69,6 +69,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     private Drawable mLoadImageError;
     private ColorStateList mLoadButtonTextColors;
     private Drawable mLoadButtonBackground;
+    private int mLoadButtonVisibility;
     private AutoRecyclerView.OnScrollListener mOnScrollListener;
 
     public AutoRecyclerView(@NonNull Context context) {
@@ -102,6 +103,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
         mLoadButtonTextColors = a.getColorStateList(R.styleable.AutoRecyclerView_loadButtonTextColor);
         mLoadButtonBackground = a.getDrawable(R.styleable.AutoRecyclerView_loadButtonBackground);
+        int loadButtonVisibility = a.getInteger(R.styleable.AutoRecyclerView_loadButtonVisibility, 0);
         int swipeRefreshColor = a.getColor(R.styleable.AutoRecyclerView_swipeRefreshColor, -1);
         if (swipeRefreshColor != -1) {
             setColorSchemeColors(swipeRefreshColor);
@@ -110,6 +112,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         mRecyclerView = new RecyclerView(context);
         mRecyclerView.setLayoutParams(layoutParams);
         mRecyclerView.addOnScrollListener(onScrollListener);
+        setLoadButtonVisibility(loadButtonVisibility);
         addView(mRecyclerView);
     }
 
@@ -308,6 +311,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             if (mLoadButtonBackground != null) {
                 mLoadErrorView.setBtnBackground(mLoadButtonBackground);
             }
+            mLoadErrorView.setBtnVisibility(mLoadButtonVisibility);
             mLoadErrorView.setBtnOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -399,6 +403,31 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             this.mLoadImageError = ContextCompat.getDrawable(getContext(), loadImageErrorResource);
             if (mLoadErrorView != null) {
                 mLoadErrorView.setImageDrawable(mLoadImageError);
+            }
+        }
+    }
+
+    public Drawable getLoadButtonBackground() {
+        return mLoadButtonBackground;
+    }
+
+    public void setLoadButtonBackground(Drawable loadButtonBackground) {
+        this.mLoadButtonBackground = loadButtonBackground;
+        if (mLoadErrorView != null) {
+            mLoadErrorView.setBtnBackground(loadButtonBackground);
+        }
+    }
+
+    /**
+     * 设置加载出错（包含数据为空）时，加载按钮的可见性状态
+     *
+     * @param loadButtonVisibility 可见性状态
+     */
+    public void setLoadButtonVisibility(int loadButtonVisibility) {
+        if (this.mLoadButtonVisibility != loadButtonVisibility) {
+            this.mLoadButtonVisibility = loadButtonVisibility;
+            if (mLoadErrorView != null) {
+                mLoadErrorView.setBtnVisibility(loadButtonVisibility);
             }
         }
     }
