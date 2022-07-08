@@ -65,11 +65,13 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     private CharSequence mLoadTextNull;
     private CharSequence mLoadTextError;
     private int mLoadTextColor;
+    private int mLoadTextMarginTop;
     private Drawable mLoadImageNull;
     private Drawable mLoadImageError;
     private ColorStateList mLoadButtonTextColors;
     private Drawable mLoadButtonBackground;
     private int mLoadButtonVisibility;
+    private int mLoadButtonMarginTop;
     private AutoRecyclerView.OnScrollListener mOnScrollListener;
 
     public AutoRecyclerView(@NonNull Context context) {
@@ -304,12 +306,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             mLoadErrorView = new LoadErrorView(getContext());
             mLoadErrorView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             mLoadErrorView.setErrTextColor(mLoadTextColor);
+            if (mLoadTextMarginTop != -1) {
+                mLoadErrorView.setTextMarginTop(mLoadTextMarginTop);
+            }
             mLoadErrorView.setBtnText(getContext().getString(R.string.load_again));
             if (mLoadButtonTextColors != null) {
                 mLoadErrorView.setBtnTextColor(mLoadButtonTextColors);
             }
             if (mLoadButtonBackground != null) {
                 mLoadErrorView.setBtnBackground(mLoadButtonBackground);
+            }
+            if (mLoadButtonMarginTop != -1) {
+                mLoadErrorView.setBtnMarginTop(mLoadButtonMarginTop);
             }
             mLoadErrorView.setBtnVisibility(mLoadButtonVisibility);
             mLoadErrorView.setBtnOnClickListener(new OnClickListener() {
@@ -375,6 +383,15 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         return mLoadImageNull;
     }
 
+    public void setLoadTextMarginTop(int loadTextMarginTop) {
+        if (this.mLoadTextMarginTop != loadTextMarginTop) {
+            this.mLoadTextMarginTop = loadTextMarginTop;
+            if (mLoadErrorView != null) {
+                mLoadErrorView.setTextMarginTop(loadTextMarginTop);
+            }
+        }
+    }
+
     /**
      * 设置加载数据为空时提示图片的Resource
      *
@@ -415,6 +432,15 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         this.mLoadButtonBackground = loadButtonBackground;
         if (mLoadErrorView != null) {
             mLoadErrorView.setBtnBackground(loadButtonBackground);
+        }
+    }
+
+    public void setLoadButtonMarginTop(int loadButtonMarginTop) {
+        if (this.mLoadButtonMarginTop != loadButtonMarginTop) {
+            this.mLoadButtonMarginTop = loadButtonMarginTop;
+            if (mLoadErrorView != null) {
+                mLoadErrorView.setBtnMarginTop(loadButtonMarginTop);
+            }
         }
     }
 

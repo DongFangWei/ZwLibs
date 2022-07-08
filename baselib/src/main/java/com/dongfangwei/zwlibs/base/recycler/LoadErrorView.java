@@ -23,6 +23,7 @@ public class LoadErrorView extends ViewGroup {
     private TextView mTextView;
     private Button mButton;
     private int mMaxImgSize;
+    private int mTextMarginTop;
     private int mBtnMarginTop;
 
     public LoadErrorView(Context context) {
@@ -48,6 +49,7 @@ public class LoadErrorView extends ViewGroup {
         a.recycle();
         float dp = getResources().getDisplayMetrics().density;
 
+        mTextMarginTop = (int) (2 * dp);
         mBtnMarginTop = (int) (16 * dp);
 
         mImageView = new ImageView(context);
@@ -106,11 +108,11 @@ public class LoadErrorView extends ViewGroup {
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
-            int imgHeight = heightSize - mTextView.getMeasuredHeight() - mBtnMarginTop - mButton.getMeasuredHeight();
+            int imgHeight = heightSize - mTextView.getMeasuredHeight() - mTextMarginTop - mBtnMarginTop - mButton.getMeasuredHeight();
             if (imgHeight < mMaxImgSize) imgSize = Math.min(imgSize, imgHeight);
             height = heightSize;
         } else {
-            height = getPaddingTop() + getPaddingBottom() + mMaxImgSize + mTextView.getMeasuredHeight() + mBtnMarginTop + mButton.getMeasuredHeight();
+            height = getPaddingTop() + getPaddingBottom() + mMaxImgSize + mTextView.getMeasuredHeight() + mTextMarginTop + mBtnMarginTop + mButton.getMeasuredHeight();
         }
 
         if (imgSize != mMaxImgSize) {
@@ -131,33 +133,20 @@ public class LoadErrorView extends ViewGroup {
         int bottom = b + getPaddingBottom();
         int width = right - left;
         int height = bottom - top;
-        int childHeight = mImageView.getMeasuredHeight() + mTextView.getMeasuredHeight() + mBtnMarginTop + mButton.getMeasuredHeight();
+        int childHeight = mImageView.getMeasuredHeight() + mTextView.getMeasuredHeight() + mTextMarginTop + mBtnMarginTop + mButton.getMeasuredHeight();
         top = top + (height - childHeight) / 2;
         int childLeft = left + (width - mImageView.getMeasuredWidth()) / 2;
         mImageView.layout(childLeft, top, childLeft + mImageView.getMeasuredWidth(), (top = top + mImageView.getMeasuredHeight()));
+
         childLeft = left + (width - mTextView.getMeasuredWidth()) / 2;
+        top += mTextMarginTop;
         mTextView.layout(childLeft, top, childLeft + mTextView.getMeasuredWidth(), (top = top + mTextView.getMeasuredHeight()));
-        if (mButton.getVisibility()==VISIBLE) {
+
+        if (mButton.getVisibility() == VISIBLE) {
             childLeft = left + (width - mButton.getMeasuredWidth()) / 2;
             top += mBtnMarginTop;
             mButton.layout(childLeft, top, childLeft + mButton.getMeasuredWidth(), top + mButton.getMeasuredHeight());
         }
-    }
-
-    public int getBtnMarginTop() {
-        return mBtnMarginTop;
-    }
-
-    public void setBtnMarginTop(int btnMarginTop) {
-        this.mBtnMarginTop = btnMarginTop;
-    }
-
-    public void setErrText(CharSequence text) {
-        mTextView.setText(text);
-    }
-
-    public void setErrTextColor(int color) {
-        mTextView.setTextColor(color);
     }
 
     public void setImageDrawable(Drawable image) {
@@ -170,6 +159,30 @@ public class LoadErrorView extends ViewGroup {
 
     public void setImageResource(int resId) {
         mImageView.setImageResource(resId);
+    }
+
+    public void setErrText(CharSequence text) {
+        mTextView.setText(text);
+    }
+
+    public void setErrTextColor(int color) {
+        mTextView.setTextColor(color);
+    }
+
+    public int getTextMarginTop() {
+        return mTextMarginTop;
+    }
+
+    public void setTextMarginTop(int textMarginTop) {
+        this.mTextMarginTop = textMarginTop;
+    }
+
+    public int getBtnMarginTop() {
+        return mBtnMarginTop;
+    }
+
+    public void setBtnMarginTop(int btnMarginTop) {
+        this.mBtnMarginTop = btnMarginTop;
     }
 
     public void setBtnText(CharSequence text) {

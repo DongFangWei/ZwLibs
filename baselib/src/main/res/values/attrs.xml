@@ -41,11 +41,13 @@
     </declare-styleable>
 
     <declare-styleable name="AutoRecyclerView">
+        <attr name="loadTextMarginTop" format="dimension" />
         <attr name="loadTextNull" format="string" />
         <attr name="loadTextError" format="string" />
         <attr name="loadTextColor" format="color" />
         <attr name="loadImageNull" format="reference" />
         <attr name="loadImageError" format="reference" />
+        <attr name="loadButtonMarginTop" format="dimension" />
         <attr name="loadButtonTextColor" format="color" />
         <attr name="loadButtonBackground" format="reference" />
         <attr name="loadButtonVisibility">
