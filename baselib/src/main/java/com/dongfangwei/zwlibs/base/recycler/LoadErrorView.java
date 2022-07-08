@@ -92,7 +92,9 @@ public class LoadErrorView extends ViewGroup {
         int imgSize = mMaxImgSize;
 
         measureChild(mTextView, widthMeasureSpec, heightMeasureSpec);
-        measureChild(mButton, widthMeasureSpec, heightMeasureSpec);
+        if (mButton.getVisibility() != GONE) {
+            measureChild(mButton, widthMeasureSpec, heightMeasureSpec);
+        }
 
         if (widthMode == MeasureSpec.EXACTLY) {
             if (widthSize < mMaxImgSize) {
@@ -135,9 +137,11 @@ public class LoadErrorView extends ViewGroup {
         mImageView.layout(childLeft, top, childLeft + mImageView.getMeasuredWidth(), (top = top + mImageView.getMeasuredHeight()));
         childLeft = left + (width - mTextView.getMeasuredWidth()) / 2;
         mTextView.layout(childLeft, top, childLeft + mTextView.getMeasuredWidth(), (top = top + mTextView.getMeasuredHeight()));
-        childLeft = left + (width - mButton.getMeasuredWidth()) / 2;
-        top += mBtnMarginTop;
-        mButton.layout(childLeft, top, childLeft + mButton.getMeasuredWidth(), top + mButton.getMeasuredHeight());
+        if (mButton.getVisibility()==VISIBLE) {
+            childLeft = left + (width - mButton.getMeasuredWidth()) / 2;
+            top += mBtnMarginTop;
+            mButton.layout(childLeft, top, childLeft + mButton.getMeasuredWidth(), top + mButton.getMeasuredHeight());
+        }
     }
 
     public int getBtnMarginTop() {
