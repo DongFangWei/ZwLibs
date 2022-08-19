@@ -95,6 +95,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
             mLoadTextError = context.getString(R.string.loaded_fail);
         }
         mLoadTextColor = a.getColor(R.styleable.AutoRecyclerView_loadTextColor, 0xFF666666);
+        mLoadTextMarginTop = a.getDimensionPixelOffset(R.styleable.AutoRecyclerView_loadTextMarginTop, -1);
         mLoadImageNull = a.getDrawable(R.styleable.AutoRecyclerView_loadImageNull);
         if (mLoadImageNull == null) {
             mLoadImageNull = ContextCompat.getDrawable(context, R.drawable.ic_load_error);
@@ -105,6 +106,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
         mLoadButtonTextColors = a.getColorStateList(R.styleable.AutoRecyclerView_loadButtonTextColor);
         mLoadButtonBackground = a.getDrawable(R.styleable.AutoRecyclerView_loadButtonBackground);
+        mLoadButtonMarginTop = a.getDimensionPixelOffset(R.styleable.AutoRecyclerView_loadButtonMarginTop, -1);
         int loadButtonVisibility = a.getInteger(R.styleable.AutoRecyclerView_loadButtonVisibility, 0);
         int swipeRefreshColor = a.getColor(R.styleable.AutoRecyclerView_swipeRefreshColor, -1);
         if (swipeRefreshColor != -1) {
