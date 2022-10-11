@@ -46,6 +46,6 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
          * @param view     被点击的view
          * @param position 被点击的view的下标
          */
-        void onItemClick(BaseAdapter adapter, View view, int position);
+        void onItemClick(BaseAdapter<?> adapter, View view, int position);
     }
 }
