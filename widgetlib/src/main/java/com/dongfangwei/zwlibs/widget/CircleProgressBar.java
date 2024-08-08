@@ -22,61 +22,112 @@ import java.text.DecimalFormat;
 
 public class CircleProgressBar extends View {
     /* 进度条类型 */
-    //圆形
+    /**
+     * 进度条类型-圆形
+     */
     public final static int TYPE_CIRCLE = 0x00000001;
-    //弧形
+    /**
+     * 进度条类型-弧形
+     */
     public final static int TYPE_ARC = 0x00000010;
-    //默认的初始角度
+    /**
+     * 默认的初始角度
+     */
     protected final static float START_ANGLE = 165f;
-    //圆弧可扫过的最大角度
+    /**
+     * 类型是圆形时-圆弧可扫过的最大角度
+     */
     protected final static float SWEEP_ANGLE_CIRCLE = 360f;
+    /**
+     * 类型是弧形时-圆弧可扫过的最大角度
+     */
     protected final static float SWEEP_ANGLE_ARC = 210f;
-    //画笔
+    /**
+     * 画笔
+     */
     private Paint mPaint;
-    //文字画笔
+    /**
+     * 文字画笔
+     */
     private TextPaint mTextPaint;
-    //文字Layout
+    /**
+     * 文字Layout
+     */
     private Layout mLayout;
 
 
-    //进度条的最大进度值
+    /**
+     * 进度条的最大进度值
+     */
     private int mMax;
-    //进度条的最小进度值
+    /**
+     * 进度条的最小进度值
+     */
     private int mMin;
-    //进度条的进度
+    /**
+     * 进度条的进度
+     */
     private int mProgress;
 
-    //进度圆弧区域
+    /**
+     * 进度圆弧区域
+     */
     protected RectF mProgressRectF = new RectF();
-    //半径
+    /**
+     * 半径
+     */
     protected float mRadius;
-    //圆心
+    /**
+     * 圆心
+     */
     protected PointF mCentre = new PointF();
-    //圆弧的起始角度
+    /**
+     * 圆弧的起始角度
+     */
     protected float mStartAngle;
-    //进度扫过的最大角度
+    /**
+     * 进度扫过的最大角度
+     */
     protected float mMaxSweepAngle;
-    //进度扫过的角度
+    /**
+     * 进度扫过的角度
+     */
     protected float mProgressSweepAngle;
 
-    //进度条宽度
+    /**
+     * 进度条宽度
+     */
     private float mProgressWidth;
-    //进度颜色
+    /**
+     * 进度颜色
+     */
     @ColorInt
     private int mProgressColor;
-    //进度背景颜色
+    /**
+     * 进度背景颜色
+     */
     @ColorInt
     private int mProgressBackground;
-    //进度条的类型
+    /**
+     * 进度条的类型
+     */
     private int mProgressType;
 
-    //用于格式化进度，最多保留两位小数
-    private DecimalFormat decimalFormat = new DecimalFormat("0.##");
-    //文字颜色
+    /**
+     * 用于格式化进度，最多保留两位小数
+     */
+    private final DecimalFormat decimalFormat = new DecimalFormat("0.##");
+    /**
+     * 文字颜色
+     */
     private ColorStateList mTextColors;
-    //是否显示文字
+    /**
+     * 是否显示文字
+     */
     private boolean mShowText;
-
+    /**
+     * 是否改变布局（用于避免重复变化）
+     */
     private boolean isChangeLayout;
 
     public CircleProgressBar(Context context) {
@@ -109,7 +160,7 @@ public class CircleProgressBar extends View {
         initPaint();
         setMax(max);
         setMin(min);
-        setProgress(progress);
+        setProgressInternal(progress, false);
         setProgressWidth(progressWidth);
         setProgressColor(progressColor);
         setProgressBackground(progressBackground);
@@ -170,7 +221,7 @@ public class CircleProgressBar extends View {
      * @param progress 进度
      */
     public void setProgress(int progress) {
-        setProgressInternal(progress, false);
+        setProgressInternal(progress, true);
     }
 
     /**
@@ -180,7 +231,7 @@ public class CircleProgressBar extends View {
      * @param fromUser 是否由用户改变
      * @return 进度是否改变
      */
-    boolean setProgressInternal(int progress, boolean fromUser) {
+    protected boolean setProgressInternal(int progress, boolean fromUser) {
         if (progress > mMax) {
             progress = mMax;
         } else if (progress < mMin) {
@@ -252,7 +303,7 @@ public class CircleProgressBar extends View {
      * @param progress 进度（已经经过验证与当前进度不同）
      * @param fromUser 是否由用户触发
      */
-    private void refreshProgress(int progress, boolean fromUser) {
+    void refreshProgress(int progress, boolean fromUser) {
         this.mProgress = progress;
         refreshProgressAngle();
         onRefreshProgress(progress, fromUser);
@@ -358,12 +409,6 @@ public class CircleProgressBar extends View {
         return mStartAngle;
     }
 
-    /**
-     * 设置起始角度
-     * 只作用于{@see mProgressType}为{@see TYPE_CIRCLE}时有效
-     *
-     * @param startAngle 起始角度
-     */
     public void setStartAngle(float startAngle) {
         if (mProgressType == TYPE_ARC) {
             this.mStartAngle = START_ANGLE;
@@ -372,14 +417,6 @@ public class CircleProgressBar extends View {
         }
     }
 
-    /**
-     * 指定进度的大小边界
-     *
-     * @param left 左
-     * @param top 上
-     * @param right 右
-     * @param bottom 下
-     */
     protected void onLayoutProgress(int left, int top, int right, int bottom) {
         int paddingLeft = getPaddingLeft();
         int paddingTop = getPaddingTop();

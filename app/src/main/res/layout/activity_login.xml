@@ -47,6 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_password_pv" />
 
+
     <com.dongfangwei.zwlibs.base.widget.PasswordView
         android:id="@+id/login_password_pv"
         android:layout_width="0dp"
@@ -58,6 +59,24 @@
         app:layout_constraintStart_toEndOf="@+id/login_password_tv"
         app:layout_constraintTop_toBottomOf="@+id/login_username_et"
         app:layout_constraintWidth_percent="0.6" />
+
+    <com.dongfangwei.zwlibs.widget.LineSeekBar
+        android:id="@+id/task_play_va_lsb"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:max="15"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:progress="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_pv"
+        app:min="1"
+        app:progressBackground="#FFF7F7F7"
+        app:progressColor="#FF0078FF"
+        app:progressWidth="6dp"
+        app:thumbSize="16dp" />
 
     <Button
         android:id="@+id/login_btn"

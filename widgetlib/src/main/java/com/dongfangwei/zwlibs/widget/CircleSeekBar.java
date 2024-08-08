@@ -13,18 +13,31 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 public class CircleSeekBar extends CircleProgressBar {
+    /**
+     * 拖动滑块
+     */
     private Drawable mThumb;
-    //拖动滑块的大小
+    /**
+     * 拖动滑块的大小
+     */
     private float mThumbSize;
-    //拖动滑块的触摸半径
+    /**
+     * 拖动滑块的触摸半径
+     */
     private float mThumbTouchRadius;
-    //拖动条改变监听
+    /**
+     * 拖动条改变监听
+     */
     private OnSeekBarChangeListener onSeekBarChangeListener;
 
-    //旧的角度，用于判断滑动是增加进度还是减少进度
+    /**
+     * 旧的角度，用于判断滑动是增加进度还是减少进度
+     */
     private float mOldAngle;
-
-    private boolean mEnabledSeek = true;
+    /**
+     * 是否启用拖动
+     */
+    private boolean enabledSeek = true;
 
 
     public CircleSeekBar(Context context) {
@@ -47,6 +60,14 @@ public class CircleSeekBar extends CircleProgressBar {
         setThumb(thumb);
         setThumbSize(thumbSize);
 
+    }
+
+    public boolean isEnabledSeek() {
+        return enabledSeek;
+    }
+
+    public void setEnabledSeek(boolean enableSeek) {
+        this.enabledSeek = enableSeek;
     }
 
     public void setThumb(Drawable thumb) {
@@ -80,14 +101,6 @@ public class CircleSeekBar extends CircleProgressBar {
         }
     }
 
-    public boolean isEnabledSeek() {
-        return mEnabledSeek;
-    }
-
-    public void setEnabledSeek(boolean enabledSeek) {
-        this.mEnabledSeek = enabledSeek;
-    }
-
     @Override
     public void onRefreshProgress(int progress, boolean fromUser) {
         super.onRefreshProgress(progress, fromUser);
@@ -117,7 +130,7 @@ public class CircleSeekBar extends CircleProgressBar {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mEnabledSeek && isEnabled()) {
+        if (enabledSeek && isEnabled()) {
             float x = event.getX();
             float y = event.getY();
             switch (event.getAction()) {
@@ -130,7 +143,7 @@ public class CircleSeekBar extends CircleProgressBar {
                     } else if (isTouchArc(x, y, 24, 24)) {
                         int progress = angleToProgress(computeTouchAngle(x, y));
                         if (progress >= getMin() && progress <= getMax()) {
-                            setProgress(progress);
+                            setProgressInternal(progress, true);
                             setPressed(true);
                             mOldAngle = mStartAngle + mMaxSweepAngle / 2;
                             if (onSeekBarChangeListener != null)
@@ -282,7 +295,11 @@ public class CircleSeekBar extends CircleProgressBar {
         } else {
             angle += 360 - mStartAngle;
         }
-        return Math.round(angle / mMaxSweepAngle * getMax());
+        if (getProgressType() == TYPE_CIRCLE) {
+            return Math.round(angle / mMaxSweepAngle * getMax());
+        } else {
+            return Math.round(angle / mMaxSweepAngle * (getMax() - getMin())) + getMin();
+        }
     }
 
     @Override

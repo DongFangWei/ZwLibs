@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="min" format="integer" />
+    <attr name="progressBackground" format="color|reference" />
+    <attr name="progressColor" format="color|reference" />
+    <attr name="progressWidth" format="dimension|reference" />
     <declare-styleable name="CircleProgressBar">
         <attr name="android:progress" />
         <attr name="android:max" />
+        <attr name="min" />
         <attr name="android:gravity" />
         <attr name="android:textSize" />
         <attr name="android:textColor" />
-        <attr name="min" format="integer" />
-        <attr name="progressBackground" format="color|reference" />
-        <attr name="progressColor" format="color|reference" />
-        <attr name="progressWidth" format="dimension|reference" />
+        <attr name="progressBackground" />
+        <attr name="progressColor" />
+        <attr name="progressWidth" />
         <attr name="progressType" format="enum">
             <enum name="circle" value="0x00000001" />
             <enum name="arc" value="0x00000010" />
@@ -18,8 +22,26 @@
         <attr name="startAngle" format="float" />
     </declare-styleable>
 
+    <attr name="thumb" format="reference" />
+    <attr name="thumbSize" format="dimension|reference" />
+
     <declare-styleable name="CircleSeekBar">
-        <attr name="thumb" format="reference" />
-        <attr name="thumbSize" format="dimension|reference" />
+        <attr name="thumb" />
+        <attr name="thumbSize" />
+    </declare-styleable>
+
+    <declare-styleable name="LineProgressBar">
+        <attr name="android:progress" />
+        <attr name="android:max" />
+        <attr name="min" />
+        <attr name="progressBackground" />
+        <attr name="progressColor" />
+        <attr name="progressWidth" />
+        <attr name="android:gravity" />
+    </declare-styleable>
+
+    <declare-styleable name="LineSeekBar">
+        <attr name="thumb" />
+        <attr name="thumbSize" />
     </declare-styleable>
 </resources>
