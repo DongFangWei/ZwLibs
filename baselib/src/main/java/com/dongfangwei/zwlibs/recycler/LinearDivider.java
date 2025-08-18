@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.recycler;
+package com.dongfangwei.zwlibs.recycler;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,17 +9,40 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * RecyclerView的线性分割线
+ */
 public class LinearDivider extends RecyclerView.ItemDecoration {
+    /**
+     * 分割线方向-水平
+     */
     public static final int HORIZONTAL = 0;
+    /**
+     * 分割线方向-垂直
+     */
     public static final int VERTICAL = 1;
+    /**
+     * 分割线颜色-默认
+     */
     private static final int DIVIDER_COLOR_DEFAULT = 0xFFE1E2E3;
-    //RecyclerView布局的方向
-    private int mOrientation;
-    private int mDividerSize;
+
+    /**
+     * 分割线方向
+     */
+    private final int mOrientation;
+    /**
+     * 分割线尺寸
+     */
+    private final int mDividerSize;
+    /**
+     * 画笔
+     */
     private Paint mPaint;
     private final Rect mBounds = new Rect();
 
     /**
+     * 线性分割线无参构造函数（分割线方向默认为{@link #HORIZONTAL}）
+     *
      * @see #LinearDivider(int)
      */
     public LinearDivider() {
@@ -27,6 +50,9 @@ public class LinearDivider extends RecyclerView.ItemDecoration {
     }
 
     /**
+     * 线性分割线单参构造函数（分割线尺寸默认为1像素）
+     *
+     * @param orientation 分割线方向
      * @see #LinearDivider(int, int)
      */
     public LinearDivider(int orientation) {
@@ -34,6 +60,10 @@ public class LinearDivider extends RecyclerView.ItemDecoration {
     }
 
     /**
+     * 线性分割线双参构造函数（颜色默认为{@link #DIVIDER_COLOR_DEFAULT}）
+     *
+     * @param orientation 分割线反向
+     * @param dividerSize 分割线尺寸
      * @see #LinearDivider(int, int, int)
      */
     public LinearDivider(int orientation, int dividerSize) {

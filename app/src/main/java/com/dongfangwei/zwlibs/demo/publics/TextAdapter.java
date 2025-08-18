@@ -6,14 +6,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.dongfangwei.zwlibs.base.recycler.BaseAutoAdapter;
-import com.dongfangwei.zwlibs.base.recycler.BaseViewHolder;
+import com.dongfangwei.zwlibs.recycler.BaseAutoAdapter;
+import com.dongfangwei.zwlibs.recycler.BaseViewHolder;
 import com.dongfangwei.zwlibs.demo.R;
 
 import java.util.List;
 
 public class TextAdapter extends BaseAutoAdapter {
-    private List<String> mDatas;
+    private List<String> mData;
 
     public TextAdapter(Context context) {
         super(context);
@@ -21,17 +21,17 @@ public class TextAdapter extends BaseAutoAdapter {
 
     public void setData(List<String> data) {
         if (data != null) {
-            if (mDatas == null) {
-                mDatas = data;
+            if (mData == null) {
+                mData = data;
             } else {
-                mDatas.addAll(data);
+                mData.addAll(data);
             }
         }
     }
 
     public void clearData() {
-        if (mDatas != null) {
-            mDatas.clear();
+        if (mData != null) {
+            mData.clear();
         }
     }
 
@@ -49,12 +49,12 @@ public class TextAdapter extends BaseAutoAdapter {
 
     @Override
     protected int getItemViewCount() {
-        return mDatas == null ? 0 : mDatas.size();
+        return mData == null ? 0 : mData.size();
     }
 
     @Override
     public String getItemViewData(int position) {
-        return mDatas.get(position);
+        return mData.get(position);
     }
 
     @Override

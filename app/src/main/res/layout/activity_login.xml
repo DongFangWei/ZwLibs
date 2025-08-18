@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.dongfangwei.zwlibs.base.widget.HeaderView
+    <com.dongfangwei.zwlibs.widget.HeaderView
         android:id="@+id/login_header_tb"
         style="@style/ViewStyle.Shadow.Toolbar"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_username_et" />
 
-    <EditText
+    <com.dongfangwei.zwlibs.widget.ClearEditText
         android:id="@+id/login_username_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="@+id/login_password_pv" />
 
 
-    <com.dongfangwei.zwlibs.base.widget.PasswordView
+    <com.dongfangwei.zwlibs.widget.PasswordView
         android:id="@+id/login_password_pv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,23 +60,23 @@
         app:layout_constraintTop_toBottomOf="@+id/login_username_et"
         app:layout_constraintWidth_percent="0.6" />
 
-    <com.dongfangwei.zwlibs.widget.LineSeekBar
-        android:id="@+id/task_play_va_lsb"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:max="15"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:progress="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_password_pv"
-        app:min="1"
-        app:progressBackground="#FFF7F7F7"
-        app:progressColor="#FF0078FF"
-        app:progressWidth="6dp"
-        app:thumbSize="16dp" />
+<!--    <com.dongfangwei.zwlibs.widget.LineSeekBar-->
+<!--        android:id="@+id/task_play_va_lsb"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:layout_marginStart="@dimen/spacing_normal"-->
+<!--        android:layout_marginEnd="@dimen/spacing_normal"-->
+<!--        android:max="15"-->
+<!--        android:layout_marginTop="@dimen/spacing_normal"-->
+<!--        android:progress="1"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/login_password_pv"-->
+<!--        app:min="1"-->
+<!--        app:progressBackground="#FFF7F7F7"-->
+<!--        app:progressColor="#FF0078FF"-->
+<!--        app:progressWidth="6dp"-->
+<!--        app:thumbSize="16dp" />-->
 
     <Button
         android:id="@+id/login_btn"

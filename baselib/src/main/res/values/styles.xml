@@ -17,6 +17,24 @@
         <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
     </style>
 
+    <!-- 弹出框动画 -->
+    <!-- 从上往下 -->
+    <style name="Animation.Popup.Top" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_top_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_top_out</item>
+    </style>
+    <!-- 从下往上 -->
+    <style name="Animation.Popup.Bottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_bottom_out</item>
+    </style>
+    <!--  从右往左  -->
+    <style name="Animation.Popup.Right" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/popup_right_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_right_out</item>
+    </style>
+
+    <!-- 对话框 -->
     <style name="Dialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -47,4 +65,15 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="ImageGroupStyle">
+        <item name="childBackground">@drawable/shape_bg_image_item</item>
+        <item name="dividerPadding">8dp</item>
+        <item name="childMaxCount">5</item>
+        <item name="lineMaxCount">3</item>
+    </style>
+
+    <style name="ImageGroupStyle.Add">
+        <item name="addViewIcon">@drawable/selector_btn_add</item>
+        <item name="addViewBackground">@drawable/shape_bg_add_photo_p</item>
+    </style>
 </resources>

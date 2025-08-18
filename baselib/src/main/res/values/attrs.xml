@@ -80,4 +80,82 @@
         <attr name="drawableSize" />
     </declare-styleable>
 
+    <declare-styleable name="ClearEditText">
+        <attr name="clearDrawable" format="reference" />
+        <attr name="drawableWidth" format="dimension" />
+        <attr name="drawableHeight" format="dimension" />
+        <attr name="drawableGravity" format="dimension">
+            <enum name="top" value="0x30" />
+            <enum name="bottom" value="0x50" />
+            <enum name="center_vertical" value="0x10" />
+        </attr>
+        <attr name="disallowed" format="string" />
+    </declare-styleable>
+
+    <!-- ImageGroup -->
+    <!-- 子组件的背景 -->
+    <attr name="childBackground" format="reference" />
+    <!--  子组件的内边距  -->
+    <attr name="childPadding" format="dimension" />
+    <!--  子组件的内边距-Start  -->
+    <attr name="childPaddingStart" format="dimension" />
+    <!--  子组件的内边距-End  -->
+    <attr name="childPaddingEnd" format="dimension" />
+    <!--  子组件的内边距-Top  -->
+    <attr name="childPaddingTop" format="dimension" />
+    <!--  子组件的内边距-Bottom  -->
+    <attr name="childPaddingBottom" format="dimension" />
+    <!--  子组件的间隔  -->
+    <attr name="dividerPadding" format="dimension" />
+    <!--  子组件的间隔-垂直  -->
+    <attr name="dividerPaddingVertical" format="dimension" />
+    <!--  子组件的间隔-水平  -->
+    <attr name="dividerPaddingHorizontal" format="dimension" />
+    <!--   子组件的最大数量   -->
+    <attr name="childMaxCount" format="integer" />
+    <!--   子组件的每行的最大数量   -->
+    <attr name="lineMaxCount" format="integer" />
+    <declare-styleable name="ImageGroup">
+        <attr name="childBackground" />
+        <attr name="childPadding" />
+        <attr name="childPaddingStart" />
+        <attr name="childPaddingEnd" />
+        <attr name="childPaddingTop" />
+        <attr name="childPaddingBottom" />
+        <attr name="dividerPadding" />
+        <attr name="dividerPaddingVertical" />
+        <attr name="dividerPaddingHorizontal" />
+        <attr name="childMaxCount" />
+        <attr name="lineMaxCount" />
+    </declare-styleable>
+
+    <declare-styleable name="ImageAddGroup">
+        <attr name="childBackground" />
+        <attr name="childPadding" />
+        <attr name="childPaddingStart" />
+        <attr name="childPaddingEnd" />
+        <attr name="childPaddingTop" />
+        <attr name="childPaddingBottom" />
+        <attr name="dividerPadding" />
+        <attr name="dividerPaddingVertical" />
+        <attr name="dividerPaddingHorizontal" />
+        <attr name="childMaxCount" />
+        <attr name="lineMaxCount" />
+        <attr name="addViewIcon" format="reference" />
+        <attr name="addViewBackground" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NumberView">
+        <attr name="addBtnIcon" format="reference" />
+        <attr name="minusBtnIcon" format="reference" />
+        <attr name="addBtnBackground" format="reference" />
+        <attr name="minusBtnBackground" format="reference" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="editBackground" format="reference" />
+        <attr name="editEnable" format="boolean" />
+        <attr name="maxNum" format="integer" />
+        <attr name="minNum" format="integer" />
+        <attr name="num" format="integer" />
+    </declare-styleable>
 </resources>

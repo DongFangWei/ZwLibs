@@ -1,9 +1,23 @@
 <resources>
+    <string name="comma">,</string>
+    <string name="colon">:</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
+    <string name="submit">提交</string>
+    <string name="success">成功</string>
+    <string name="failure">失败</string>
+
     <!-- LoadHolder -->
     <string name="loading">正在加载···</string>
-    <string name="loaded">亲！已经没有了！</string>
-    <string name="no_data">暂无数据哦~</string>
+    <string name="loaded">已经没有了！</string>
+    <string name="no_data">暂无数据~</string>
     <string name="loaded_fail">加载失败(ｷ｀ﾟДﾟ´)!!!</string>
     <string name="load_again">重新加载</string>
     <string name="load_error_try_again">加载出错，点击重试</string>
+
+    <!-- 图片选择 -->
+    <string name="image_selector_type_camera">拍摄</string>
+    <string name="image_selector_type_camera_cue_1">照片</string>
+    <string name="image_selector_type_photo">从相册选择</string>
 </resources>

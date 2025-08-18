@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.recycler;
+package com.dongfangwei.zwlibs.recycler;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,13 +16,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 public class LoadErrorView extends ViewGroup {
-    private ImageView mImageView;
-    private TextView mTextView;
-    private Button mButton;
-    private int mMaxImgSize;
+    private final ImageView mImageView;
+    private final TextView mTextView;
+    private final Button mButton;
+    private final int mMaxImgSize;
     private int mTextMarginTop;
     private int mBtnMarginTop;
 

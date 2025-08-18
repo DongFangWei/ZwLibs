@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.widget;
+package com.dongfangwei.zwlibs.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.widget.EditText;
 
 import androidx.core.content.ContextCompat;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 /**
  * Created by 张巍 on 2019/5/9.

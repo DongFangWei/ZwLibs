@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.widget;
+package com.dongfangwei.zwlibs.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

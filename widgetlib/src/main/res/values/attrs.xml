@@ -44,4 +44,6 @@
         <attr name="thumb" />
         <attr name="thumbSize" />
     </declare-styleable>
+
+
 </resources>

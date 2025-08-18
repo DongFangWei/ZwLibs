@@ -27,14 +27,14 @@
         android:layout_above="@+id/main_navigation_nb"
         android:background="@drawable/shape_shadow_horizontal_top" />
 
-    <com.dongfangwei.zwlibs.base.navigation.NavigationBar
+    <com.dongfangwei.zwlibs.navigation.NavigationBar
         android:id="@+id/main_navigation_nb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white">
 
-        <com.dongfangwei.zwlibs.base.navigation.NavigationItem
+        <com.dongfangwei.zwlibs.navigation.NavigationItem
             android:id="@+id/main_home_ni"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,12 +43,12 @@
             android:text="@string/home"
             app:badgeNum="2" />
 
-        <com.dongfangwei.zwlibs.base.navigation.NavigationItem
+        <com.dongfangwei.zwlibs.navigation.NavigationItem
             android:id="@+id/main_user_ni"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/selector_user"
             android:text="@string/user" />
-    </com.dongfangwei.zwlibs.base.navigation.NavigationBar>
+    </com.dongfangwei.zwlibs.navigation.NavigationBar>
 </RelativeLayout>

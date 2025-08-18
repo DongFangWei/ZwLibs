@@ -1,10 +1,11 @@
-package com.dongfangwei.zwlibs.base.recycler;
+package com.dongfangwei.zwlibs.recycler;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 /**
  * 自动加载的RecyclerView，配合{@link OnLoadListener}与{@link BaseAutoAdapter}使用实现自动加载
@@ -49,29 +50,80 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
      */
     static final int LOAD_STATE_ERROR = 4;
 
-    // 开启或者关闭加载更多功能
+    /**
+     * 开启或者关闭加载更多功能
+     */
     private boolean mEnableLoad = false;
-    //当前加载状态
+    /**
+     * 当前加载状态
+     */
     private int mLoadState = LOAD_STATE_IDLE;
-    //刷新完成是否自动回到顶部
+    /**
+     * 刷新完成是否自动回到顶部
+     */
     private boolean mAutoToFirst = true;
 
+    /**
+     * 显示内容的RecyclerView
+     */
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
+    /**
+     * 内容适配器
+     */
     private BaseAutoAdapter mAdapter;
+    /**
+     * 加载回调监听
+     */
     private OnLoadListener mOnLoadListener;
 
+    /**
+     * 加载出错提示组件
+     */
     private LoadErrorView mLoadErrorView;
+    /**
+     * 加载提示文本 - 没有数据
+     */
     private CharSequence mLoadTextNull;
+    /**
+     * 加载提示文本 - 加载出错
+     */
     private CharSequence mLoadTextError;
+    /**
+     * 加载提示文本的颜色
+     */
     private int mLoadTextColor;
+    /**
+     * 加载提示文本的上边距
+     */
     private int mLoadTextMarginTop;
+    /**
+     * 加载提示图片 - 没有数据
+     */
     private Drawable mLoadImageNull;
+    /**
+     * 加载提示图片 - 加载出错
+     */
     private Drawable mLoadImageError;
+    /**
+     * 加载按钮的文本颜色
+     */
     private ColorStateList mLoadButtonTextColors;
+    /**
+     * 加载按钮的背景图
+     */
     private Drawable mLoadButtonBackground;
+    /**
+     * 加载按钮的显示样式
+     */
     private int mLoadButtonVisibility;
+    /**
+     * 加载按钮的上边距
+     */
     private int mLoadButtonMarginTop;
+    /**
+     * 滚动监听
+     */
     private AutoRecyclerView.OnScrollListener mOnScrollListener;
 
     public AutoRecyclerView(@NonNull Context context) {
@@ -85,6 +137,12 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         a.recycle();
     }
 
+    /**
+     * 初始化
+     *
+     * @param context 上下文
+     * @param a       样式
+     */
     private void init(Context context, TypedArray a) {
         mLoadTextNull = a.getString(R.styleable.AutoRecyclerView_loadTextNull);
         if (mLoadTextNull == null) {
@@ -115,7 +173,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mRecyclerView = new RecyclerView(context);
         mRecyclerView.setLayoutParams(layoutParams);
-        mRecyclerView.addOnScrollListener(onScrollListener);
+        mRecyclerView.addOnScrollListener(mOnScrollRvListener);
         setLoadButtonVisibility(loadButtonVisibility);
         addView(mRecyclerView);
     }
@@ -151,7 +209,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         this.mOnScrollListener = onScrollListener;
     }
 
-    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+    /**
+     * RecyclerView滚动监听
+     */
+    private final RecyclerView.OnScrollListener mOnScrollRvListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             if (mEnableLoad && mLoadState == LOAD_STATE_IDLE
@@ -159,6 +220,10 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
                     && mLayoutManager != null && recyclerView.getAdapter() != null
                     && mLayoutManager.findLastVisibleItemPosition() >= recyclerView.getAdapter().getItemCount() - 2) {
                 onLoad();
+            }
+
+            if (mOnScrollListener != null) {
+                mOnScrollListener.onScrollStateChanged(AutoRecyclerView.this, newState);
             }
         }
 
@@ -170,6 +235,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     };
 
+    /**
+     * RecyclerView滚动到顶部
+     */
+    public void scrollToTop() {
+        if (this.mRecyclerView != null) {
+            this.mRecyclerView.scrollToPosition(0);
+        }
+    }
+
+    /**
+     * 加载数据
+     */
     private void onLoad() {
         mLoadState = LOAD_STATE_LOADING;
         if (mOnLoadListener != null) {
@@ -228,6 +305,11 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 当前是否没有数据
+     *
+     * @return 是：true
+     */
     private boolean isNullData() {
         return mAdapter == null || mAdapter.isEmptyData();
     }
@@ -238,29 +320,46 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         mRecyclerView.addItemDecoration(decor);
     }
 
+    /**
+     * 设置适配器
+     *
+     * @param adapter 适配器
+     */
     public void setAdapter(BaseAutoAdapter adapter) {
         if (adapter != null) {
             mAdapter = adapter;
             mAdapter.setShowLoadView(mEnableLoad);
-            mAdapter.setOnReloadListener(new BaseAutoAdapter.OnReloadListener() {
-                @Override
-                public boolean onClickReLoad() {
-                    onLoad();
-                    return true;
-                }
+            mAdapter.setOnReloadListener(() -> {
+                onLoad();
+                return true;
             });
             mRecyclerView.setAdapter(adapter);
         }
     }
 
+    /**
+     * 设置刷新功能的启用状态
+     *
+     * @param enableRefresh 启用刷新：true，禁用刷新：false
+     */
     public void setEnableRefresh(boolean enableRefresh) {
         this.setEnabled(enableRefresh);
     }
 
+    /**
+     * 获取加载功能的启用状态
+     *
+     * @return 启用：true
+     */
     public boolean enableLoad() {
         return mEnableLoad;
     }
 
+    /**
+     * 设置加载功能的启用状态
+     *
+     * @param enableLoad 启用加载：true，禁用刷新：false
+     */
     public void setEnableLoad(boolean enableLoad) {
         if (this.mEnableLoad == enableLoad) return;
 
@@ -270,14 +369,27 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 是否自动回到顶部
+     */
     public boolean isAutoToFirst() {
         return mAutoToFirst;
     }
 
-    public void setAutoToFirst(boolean mAutoToFirst) {
-        this.mAutoToFirst = mAutoToFirst;
+    /**
+     * 设置加载完是否自动回到顶部
+     *
+     * @param autoToFirst 自动回到顶部
+     */
+    public void setAutoToFirst(boolean autoToFirst) {
+        this.mAutoToFirst = autoToFirst;
     }
 
+    /**
+     * 设置RecyclerView的LayoutManager
+     *
+     * @param layoutManager 布局管理者
+     */
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof LinearLayoutManager) {
             this.mLayoutManager = (LinearLayoutManager) layoutManager;
@@ -285,28 +397,42 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
+    /**
+     * 设置加载监听
+     *
+     * @param onLoadListener 加载监听
+     */
     public void setOnLoadListener(OnLoadListener onLoadListener) {
         this.mOnLoadListener = onLoadListener;
         this.setOnRefreshListener(onLoadListener);
         this.setEnableLoad(true);
     }
 
+    /**
+     * 显示RecyclerView
+     */
     private void showRecyclerView() {
         if (mRecyclerView.getVisibility() != VISIBLE) {
             mRecyclerView.setVisibility(VISIBLE);
         }
     }
 
+    /**
+     * 隐藏RecyclerView
+     */
     private void hideRecyclerView() {
         if (mRecyclerView.getVisibility() == VISIBLE) {
             mRecyclerView.setVisibility(GONE);
         }
     }
 
+    /**
+     * 初始化加载错误提示View
+     */
     private void initLoadErrorView() {
         if (mLoadErrorView == null) {
             mLoadErrorView = new LoadErrorView(getContext());
-            mLoadErrorView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            mLoadErrorView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             mLoadErrorView.setErrTextColor(mLoadTextColor);
             if (mLoadTextMarginTop != -1) {
                 mLoadErrorView.setTextMarginTop(mLoadTextMarginTop);
@@ -322,19 +448,19 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
                 mLoadErrorView.setBtnMarginTop(mLoadButtonMarginTop);
             }
             mLoadErrorView.setBtnVisibility(mLoadButtonVisibility);
-            mLoadErrorView.setBtnOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnLoadListener != null) {
-                        setRefreshing(true);
-                        mOnLoadListener.onRefresh();
-                    }
+            mLoadErrorView.setBtnOnClickListener(v -> {
+                if (mOnLoadListener != null) {
+                    setRefreshing(true);
+                    mOnLoadListener.onRefresh();
                 }
             });
             this.addView(mLoadErrorView);
         }
     }
 
+    /**
+     * 显示加载提示view
+     */
     private void showLoadErrorView() {
         if (mLoadErrorView == null) {
             initLoadErrorView();
@@ -343,12 +469,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 隐藏加载提示view
+     */
     private void hideLoadErrorView() {
         if (mLoadErrorView != null && mLoadErrorView.getVisibility() == VISIBLE) {
             mLoadErrorView.setVisibility(GONE);
         }
     }
 
+    /**
+     * 获取加载数据为空时的提示文字
+     */
     public CharSequence getLoadTextNull() {
         return mLoadTextNull;
     }
@@ -365,6 +497,9 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 获取加载出错时的提示文字
+     */
     public CharSequence getLoadTextError() {
         return mLoadTextError;
     }
@@ -381,10 +516,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 获取数据为空时的提示图标
+     */
     public Drawable getLoadImageNull() {
         return mLoadImageNull;
     }
 
+    /**
+     * 设置加载提示文本的上边距
+     *
+     * @param loadTextMarginTop 加载提示文本的上边距
+     */
     public void setLoadTextMarginTop(int loadTextMarginTop) {
         if (this.mLoadTextMarginTop != loadTextMarginTop) {
             this.mLoadTextMarginTop = loadTextMarginTop;
@@ -408,6 +551,9 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 获取加载出错时的提示图标
+     */
     public Drawable getLoadImageError() {
         return mLoadImageError;
     }
@@ -426,10 +572,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 获取加载按钮的背景图
+     */
     public Drawable getLoadButtonBackground() {
         return mLoadButtonBackground;
     }
 
+    /**
+     * 设置加载按钮的背景图
+     *
+     * @param loadButtonBackground 背景图
+     */
     public void setLoadButtonBackground(Drawable loadButtonBackground) {
         this.mLoadButtonBackground = loadButtonBackground;
         if (mLoadErrorView != null) {
@@ -437,6 +591,11 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    /**
+     * 设置加载按钮的上边距
+     *
+     * @param loadButtonMarginTop 加载按钮的上边距
+     */
     public void setLoadButtonMarginTop(int loadButtonMarginTop) {
         if (this.mLoadButtonMarginTop != loadButtonMarginTop) {
             this.mLoadButtonMarginTop = loadButtonMarginTop;
@@ -460,9 +619,18 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //通知父层ViewGroup不要拦截点击事件
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
+
     /**
-     * 加载接口
-     * {@link OnLoadListener#onRefresh} 刷新回调；当组件触发刷新条件时，回调此接口通知监听者
+     * 加载回调监听
+     * <p>
+     * {@link OnLoadListener#onRefresh()} 刷新回调；当组件触发刷新条件时，回调此接口通知监听者
+     * <p>
      * {@link OnLoadListener#onLoad()} 加载更多回调；当组件触发加载更多条件时，回调此接口通知监听者
      */
     public interface OnLoadListener extends OnRefreshListener {
@@ -472,7 +640,12 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         void onLoad();
     }
 
+    /**
+     * 滚动监听
+     */
     public interface OnScrollListener {
         void onScrolled(@NonNull AutoRecyclerView recyclerView, int dx, int dy);
+
+        void onScrollStateChanged(@NonNull AutoRecyclerView recyclerView, int newState);
     }
 }

@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base;
+package com.dongfangwei.zwlibs;
 
 import org.junit.Test;
 

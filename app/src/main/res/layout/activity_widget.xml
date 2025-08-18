@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.dongfangwei.zwlibs.base.widget.HeaderView
+    <com.dongfangwei.zwlibs.widget.HeaderView
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

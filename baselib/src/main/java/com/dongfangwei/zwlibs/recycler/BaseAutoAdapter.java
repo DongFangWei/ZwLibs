@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.recycler;
+package com.dongfangwei.zwlibs.recycler;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 
 public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implements View.OnClickListener {

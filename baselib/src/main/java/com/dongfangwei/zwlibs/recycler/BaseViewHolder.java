@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.recycler;
+package com.dongfangwei.zwlibs.recycler;
 
 import android.content.Context;
 import android.view.LayoutInflater;

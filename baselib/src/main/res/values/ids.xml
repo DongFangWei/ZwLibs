@@ -4,11 +4,21 @@
     <item name="navigationIcon" type="id" />
     <item name="navigationText" type="id" />
     <item name="navigationBadge" type="id" />
+
     <!-- Dialog -->
     <item name="dialogOkBtn" type="id" />
     <item name="dialogCancelBtn" type="id" />
+
     <!-- Header -->
     <item name="headerBack" type="id" />
     <item name="headerMenu" type="id" />
     <item name="headerTitle" type="id" />
+
+    <!-- ImageAddGroup -->
+    <item name="imageAddBtn" type="id" />
+
+    <!-- NumberView -->
+    <item name="addBtn" type="id" />
+    <item name="minusBtn" type="id" />
+    <item name="numEt" type="id" />
 </resources>

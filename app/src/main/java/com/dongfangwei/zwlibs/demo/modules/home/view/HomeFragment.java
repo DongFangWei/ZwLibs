@@ -12,9 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.dongfangwei.zwlibs.base.recycler.AutoRecyclerView;
-import com.dongfangwei.zwlibs.base.recycler.BaseAdapter;
-import com.dongfangwei.zwlibs.base.recycler.LinearDivider;
+import com.dongfangwei.zwlibs.recycler.AutoRecyclerView;
+import com.dongfangwei.zwlibs.recycler.BaseAdapter;
+import com.dongfangwei.zwlibs.recycler.LinearDivider;
 import com.dongfangwei.zwlibs.demo.R;
 import com.dongfangwei.zwlibs.demo.modules.home.presenter.HomePresenter;
 import com.dongfangwei.zwlibs.demo.modules.home.presenter.IHomePresenter;

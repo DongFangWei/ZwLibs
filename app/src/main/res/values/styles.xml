@@ -60,11 +60,11 @@
     </style>
 
     <style name="TextAppearance.Gray" parent="Base.TextAppearance">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.DarkerGray" parent="Base.TextAppearance">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Tiny.White">
@@ -140,74 +140,74 @@
     </style>
 
     <style name="TextAppearance.Tiny.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Least.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Smaller.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Small.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Normal.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Large.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Larger.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Largest.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Huge.Gary">
-        <item name="android:textColor">@color/text_gray</item>
+        <item name="android:textColor">@color/textGray</item>
     </style>
 
     <style name="TextAppearance.Tiny.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Least.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Smaller.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Small.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Normal.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Large.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Larger.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Largest.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 
     <style name="TextAppearance.Huge.DarkerGray">
-        <item name="android:textColor">@color/text_darker_gray</item>
+        <item name="android:textColor">@color/textDarkerGray</item>
     </style>
 </resources>

@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base;
+package com.dongfangwei.zwlibs;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.dongfangwei.zwlibs.base.test", appContext.getPackageName());
+        assertEquals("com.dongfangwei.zwlibs.test", appContext.getPackageName());
     }
 }

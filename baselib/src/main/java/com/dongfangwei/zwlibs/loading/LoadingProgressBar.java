@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.loading;
+package com.dongfangwei.zwlibs.loading;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 /**
  * 表示加载中状态的进度条对话框

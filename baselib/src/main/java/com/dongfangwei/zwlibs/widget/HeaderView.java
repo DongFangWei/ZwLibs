@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.widget;
+package com.dongfangwei.zwlibs.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,7 +16,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.dongfangwei.zwlibs.base.R;
+import com.dongfangwei.zwlibs.R;
 
 
 /**

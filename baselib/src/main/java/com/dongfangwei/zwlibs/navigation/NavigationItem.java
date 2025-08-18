@@ -1,4 +1,4 @@
-package com.dongfangwei.zwlibs.base.navigation;
+package com.dongfangwei.zwlibs.navigation;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -17,8 +17,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.dongfangwei.zwlibs.base.R;
-import com.dongfangwei.zwlibs.base.widget.BadgeView;
+import com.dongfangwei.zwlibs.R;
+import com.dongfangwei.zwlibs.widget.BadgeView;
 
 import java.util.Locale;
 

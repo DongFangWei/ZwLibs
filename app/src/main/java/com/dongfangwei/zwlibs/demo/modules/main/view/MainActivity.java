@@ -11,7 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.dongfangwei.zwlibs.base.navigation.NavigationBar;
+import com.dongfangwei.zwlibs.navigation.NavigationBar;
 import com.dongfangwei.zwlibs.demo.R;
 import com.dongfangwei.zwlibs.demo.modules.home.view.HomeFragment;
 import com.dongfangwei.zwlibs.demo.modules.main.presenter.MainPresenter;
