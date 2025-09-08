@@ -160,7 +160,7 @@ public class CircleProgressBar extends View {
         initPaint();
         setMax(max);
         setMin(min);
-        setProgressInternal(progress, false);
+        setProgressInternal(progress);
         setProgressWidth(progressWidth);
         setProgressColor(progressColor);
         setProgressBackground(progressBackground);
@@ -194,7 +194,7 @@ public class CircleProgressBar extends View {
             this.mMax = max;
 
             int progress = Math.min(mProgress, max);
-            refreshProgress(progress, false);
+            refreshProgress(progress);
         }
     }
 
@@ -207,7 +207,7 @@ public class CircleProgressBar extends View {
             this.mMin = Math.max(0, min);
 
             int progress = Math.max(mProgress, mMin);
-            refreshProgress(progress, false);
+            refreshProgress(progress);
         }
     }
 
@@ -221,24 +221,23 @@ public class CircleProgressBar extends View {
      * @param progress 进度
      */
     public void setProgress(int progress) {
-        setProgressInternal(progress, true);
+        setProgressInternal(progress);
     }
 
     /**
      * 设置进度条的内部方法
      *
      * @param progress 进度
-     * @param fromUser 是否由用户改变
      * @return 进度是否改变
      */
-    protected boolean setProgressInternal(int progress, boolean fromUser) {
+    protected boolean setProgressInternal(int progress) {
         if (progress > mMax) {
             progress = mMax;
         } else if (progress < mMin) {
             progress = mMin;
         }
         if (progress != mProgress) {
-            refreshProgress(progress, fromUser);
+            refreshProgress(progress);
             return true;
         } else {
             return false;
@@ -301,25 +300,14 @@ public class CircleProgressBar extends View {
      * 刷新进度
      *
      * @param progress 进度（已经经过验证与当前进度不同）
-     * @param fromUser 是否由用户触发
      */
-    void refreshProgress(int progress, boolean fromUser) {
+    protected void refreshProgress(int progress) {
         this.mProgress = progress;
         refreshProgressAngle();
-        onRefreshProgress(progress, fromUser);
         assumeLayout();
         invalidate();
     }
 
-    /**
-     * 进度刷新。当进度发生刷新时调用
-     *
-     * @param progress 已经刷新的进度
-     * @param fromUser 是否由用户触发
-     */
-    public void onRefreshProgress(int progress, boolean fromUser) {
-
-    }
 
     /**
      * 刷新进度扫过的角度
@@ -341,7 +329,7 @@ public class CircleProgressBar extends View {
             float spacingAdd = 0f, spacingMult = 1f;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 StaticLayout.Builder builder = StaticLayout.Builder.obtain(text,
-                        0, text.length(), getTextPaint(), wantWidth)
+                                0, text.length(), getTextPaint(), wantWidth)
                         //设置对齐方式
                         .setAlignment(alignment)
                         //设置行距参数。

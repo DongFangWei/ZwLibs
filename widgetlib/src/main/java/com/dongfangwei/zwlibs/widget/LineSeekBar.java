@@ -117,13 +117,27 @@ public class LineSeekBar extends LineProgressBar {
         }
     }
 
+    @Override
+    public void setProgress(int progress) {
+        this.setProgress(progress, true);
+    }
+
     /**
      * 设置进度条的进度
      *
-     * @param progress 进度
+     * @param progress   进度
+     * @param onListener 是否触发回调
      */
-    public void setProgress(int progress, boolean b) {
-        setProgressInternal(progress, b);
+    public void setProgress(int progress, boolean onListener) {
+        if (setProgressInternal(progress) && onListener && onSeekBarChangeListener != null) {
+            onSeekBarChangeListener.onProgressChanged(this, progress);
+        }
+    }
+
+    @Override
+    protected void refreshProgress(int progress) {
+        super.refreshProgress(progress);
+        refreshThumbCentre();
     }
 
     @Override
@@ -161,14 +175,6 @@ public class LineSeekBar extends LineProgressBar {
         refreshThumbCentre();
     }
 
-    @Override
-    public void onRefreshProgress(int progress, boolean fromUser) {
-        super.onRefreshProgress(progress, fromUser);
-        refreshThumbCentre();
-        System.out.println(progress);
-        if (onSeekBarChangeListener != null)
-            onSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -199,27 +205,27 @@ public class LineSeekBar extends LineProgressBar {
                         return true;
                     } else if (isTouchBar(x, y)) {
                         int progress = pointToProgress(x, y);
-                        if (setProgressInternal(progress, true)) {
-                            setPressed(true);
-                            if (onSeekBarChangeListener != null)
-                                onSeekBarChangeListener.onStartTrackingTouch(this);
-                            return true;
-                        }
+                        setProgressInternal(progress);
+                        setPressed(true);
+                        if (onSeekBarChangeListener != null)
+                            onSeekBarChangeListener.onStartTrackingTouch(this);
+                        return true;
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (isPressed()) {
                         int progress = pointToProgress(x, y);
-                        setProgressInternal(progress, true);
+                        setProgressInternal(progress);
                         return true;
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if (onSeekBarChangeListener != null)
-                        onSeekBarChangeListener.onStopTrackingTouch(this);
-
                     if (isPressed()) {
                         setPressed(false);
+                        if (onSeekBarChangeListener != null) {
+                            onSeekBarChangeListener.onStopTrackingTouch(this);
+                            onSeekBarChangeListener.onProgressChanged(this, getProgress());
+                        }
                         return true;
                     }
                     break;
@@ -281,13 +287,12 @@ public class LineSeekBar extends LineProgressBar {
     public interface OnSeekBarChangeListener {
 
         /**
-         * 通知进度级别已更改。客户端可以使用from user参数将用户发起的更改与以编程方式发生的更改区分开来。
+         * 通知进度级别已更改
          *
          * @param seekBar  进度改变的CircleSeekBar
          * @param progress 当前的进度，范围0到{@link LineProgressBar#setMax(int)}。(默认值为0到100)
-         * @param fromUser 如果进度改变是由用户触发的则为true
          */
-        void onProgressChanged(LineSeekBar seekBar, int progress, boolean fromUser);
+        void onProgressChanged(LineSeekBar seekBar, int progress);
 
         /**
          * 通知用户已开始触摸手势。客户端可能希望使用此选项来禁用拖动。

@@ -31,7 +31,7 @@ public class LineProgressBar extends View {
     /**
      * 进度条的进度
      */
-    protected int mProgress;
+    private int mProgress;
 
     /**
      * 进度区域
@@ -94,7 +94,7 @@ public class LineProgressBar extends View {
         setProgressColor(progressColor);
         setProgressBackground(progressBackground);
         setGravity(gravity);
-        setProgressInternal(progress, false);
+        setProgressInternal(progress);
     }
 
 
@@ -117,7 +117,7 @@ public class LineProgressBar extends View {
             this.mMax = max;
 
             int progress = Math.min(mProgress, max);
-            refreshProgress(progress, false);
+            refreshProgress(progress);
         }
     }
 
@@ -130,7 +130,7 @@ public class LineProgressBar extends View {
             this.mMin = Math.max(0, min);
 
             int progress = Math.max(mProgress, mMin);
-            refreshProgress(progress, false);
+            refreshProgress(progress);
         }
     }
 
@@ -144,23 +144,22 @@ public class LineProgressBar extends View {
      * @param progress 进度
      */
     public void setProgress(int progress) {
-        setProgressInternal(progress, true);
+        setProgressInternal(progress);
     }
 
     /**
      * 设置进度条的内部方法
      *
      * @param progress 进度
-     * @param fromUser 是否由用户改变
      */
-    boolean setProgressInternal(int progress, boolean fromUser) {
+    boolean setProgressInternal(int progress) {
         if (progress > mMax) {
             progress = mMax;
         } else if (progress < mMin) {
             progress = mMin;
         }
         if (progress != mProgress) {
-            refreshProgress(progress, fromUser);
+            refreshProgress(progress);
             return true;
         } else {
             return false;
@@ -201,22 +200,10 @@ public class LineProgressBar extends View {
      * 刷新进度
      *
      * @param progress 进度（已经经过验证与当前进度不同）
-     * @param fromUser 是否由用户触发
      */
-    void refreshProgress(int progress, boolean fromUser) {
+    protected void refreshProgress(int progress) {
         this.mProgress = progress;
-        onRefreshProgress(progress, fromUser);
         invalidate();
-    }
-
-    /**
-     * 进度刷新。当进度发生刷新时调用
-     *
-     * @param progress 已经刷新的进度
-     * @param fromUser 是否由用户触发
-     */
-    protected void onRefreshProgress(int progress, boolean fromUser) {
-
     }
 
     public Paint getPaint() {

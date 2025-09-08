@@ -102,10 +102,21 @@ public class CircleSeekBar extends CircleProgressBar {
     }
 
     @Override
-    public void onRefreshProgress(int progress, boolean fromUser) {
-        super.onRefreshProgress(progress, fromUser);
-        if (onSeekBarChangeListener != null)
-            onSeekBarChangeListener.onProgressChanged(this, progress, fromUser);
+    public void setProgress(int progress) {
+        this.setProgress(progress, true);
+    }
+
+
+    /**
+     * 设置进度条的进度
+     *
+     * @param progress   进度
+     * @param onListener 是否触发回调
+     */
+    public void setProgress(int progress, boolean onListener) {
+        if (setProgressInternal(progress) && onListener && onSeekBarChangeListener != null) {
+            onSeekBarChangeListener.onProgressChanged(this, progress);
+        }
     }
 
     @Override
@@ -114,7 +125,6 @@ public class CircleSeekBar extends CircleProgressBar {
         if (mThumb != null) drawThumb(canvas);
 
     }
-
 
     protected void drawThumb(Canvas canvas) {
         final int saveCount = canvas.save();
@@ -143,7 +153,7 @@ public class CircleSeekBar extends CircleProgressBar {
                     } else if (isTouchArc(x, y, 24, 24)) {
                         int progress = angleToProgress(computeTouchAngle(x, y));
                         if (progress >= getMin() && progress <= getMax()) {
-                            setProgressInternal(progress, true);
+                            setProgressInternal(progress);
                             setPressed(true);
                             mOldAngle = mStartAngle + mMaxSweepAngle / 2;
                             if (onSeekBarChangeListener != null)
@@ -159,11 +169,12 @@ public class CircleSeekBar extends CircleProgressBar {
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if (onSeekBarChangeListener != null)
-                        onSeekBarChangeListener.onStopTrackingTouch(this);
-
                     if (isPressed()) {
                         setPressed(false);
+                        if (onSeekBarChangeListener != null) {
+                            onSeekBarChangeListener.onStopTrackingTouch(this);
+                            onSeekBarChangeListener.onProgressChanged(this, getProgress());
+                        }
                         return true;
                     }
                     break;
@@ -206,7 +217,7 @@ public class CircleSeekBar extends CircleProgressBar {
                 }
             }
         }
-        if (setProgressInternal(angleToProgress(angle), true)) {
+        if (setProgressInternal(angleToProgress(angle))) {
             mOldAngle = currentAngle;
         }
     }
@@ -337,13 +348,12 @@ public class CircleSeekBar extends CircleProgressBar {
     public interface OnSeekBarChangeListener {
 
         /**
-         * 通知进度级别已更改。客户端可以使用from user参数将用户发起的更改与以编程方式发生的更改区分开来。
+         * 通知进度级别已更改
          *
          * @param seekBar  进度改变的CircleSeekBar
          * @param progress 当前的进度，范围0到{@link CircleProgressBar#setMax(int)}。(默认值为0到100)
-         * @param fromUser 如果进度改变是由用户触发的则为true
          */
-        void onProgressChanged(CircleSeekBar seekBar, int progress, boolean fromUser);
+        void onProgressChanged(CircleSeekBar seekBar, int progress);
 
         /**
          * 通知用户已开始触摸手势。客户端可能希望使用此选项来禁用拖动。

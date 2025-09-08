@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
-import androidx.appcompat.content.res.AppCompatResources;
 
 import com.dongfangwei.zwlibs.R;
 import com.dongfangwei.zwlibs.widget.BadgeView;
@@ -55,25 +54,20 @@ public class NavigationItem extends ViewGroup {
     public NavigationItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationItem, defStyleAttr, 0);
-        final CharSequence text = a.getText(R.styleable.NavigationItem_android_text);
-        Drawable drawable;
-        final int id = a.getResourceId(R.styleable.NavigationItem_srcCompat, -1);
-        if (id != -1) {
-            drawable = AppCompatResources.getDrawable(context, id);
-        } else {
-            drawable = a.getDrawable(R.styleable.NavigationItem_android_src);
-        }
-        final int iconBackgroundRes = a.getResourceId(R.styleable.NavigationItem_iconBackground, -1);
-        final int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_textAppearance, -1);
-        final ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
-        final int textSize = a.getDimensionPixelSize(R.styleable.NavigationItem_android_textSize, -1);
-        final int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
-        final int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
-        final int iconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
-        final int iconPaddingStart = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingStart, iconPadding);
-        final int iconPaddingEnd = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingEnd, iconPadding);
-        final int iconPaddingTop = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingTop, iconPadding);
-        final int iconPaddingBottom = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingBottom, iconPadding);
+        CharSequence text = a.getText(R.styleable.NavigationItem_android_text);
+        ColorStateList textColor = a.getColorStateList(R.styleable.NavigationItem_android_textColor);
+        int textSize = a.getDimensionPixelSize(R.styleable.NavigationItem_android_textSize, -1);
+        int textAppearanceRes = a.getResourceId(R.styleable.NavigationItem_android_textAppearance, -1);
+        int iconRes = a.getResourceId(R.styleable.NavigationItem_iconSrc, -1);
+        int iconBackgroundRes = a.getResourceId(R.styleable.NavigationItem_iconBackground, -1);
+        int iconSize = a.getDimensionPixelSize(R.styleable.NavigationItem_iconSize, -1);
+        int badgeNum = a.getInteger(R.styleable.NavigationItem_badgeNum, 0);
+        int iconPadding = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPadding, 0);
+        int iconPaddingStart = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingStart, iconPadding);
+        int iconPaddingEnd = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingEnd, iconPadding);
+        int iconPaddingTop = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingTop, iconPadding);
+        int iconPaddingBottom = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconPaddingBottom, iconPadding);
+        int iconScaleType = a.getInt(R.styleable.NavigationItem_iconScaleType, -1);
 
         mIconTextSpacing = a.getDimensionPixelOffset(R.styleable.NavigationItem_iconTextSpacing, 0);
         mMaxBadgeNum = a.getInteger(R.styleable.NavigationItem_maxBadgeNum, 99);
@@ -84,8 +78,38 @@ public class NavigationItem extends ViewGroup {
         initView(context, textAppearanceRes, textSize, textColor, iconSize, badgeNum);
         setText(text);
         setIconPaddingRelative(iconPaddingStart, iconPaddingTop, iconPaddingEnd, iconPaddingBottom);
-        if (drawable != null) {
-            setImageDrawable(drawable);
+        if (iconRes != -1) {
+            setIconResource(iconRes);
+        }
+        if (iconScaleType >= 0) {
+            ImageView.ScaleType scaleType;
+            switch (iconScaleType) {
+                case 1:
+                    scaleType = ImageView.ScaleType.FIT_XY;
+                    break;
+                case 2:
+                    scaleType = ImageView.ScaleType.FIT_START;
+                    break;
+                case 3:
+                    scaleType = ImageView.ScaleType.FIT_CENTER;
+                    break;
+                case 4:
+                    scaleType = ImageView.ScaleType.FIT_END;
+                    break;
+                case 5:
+                    scaleType = ImageView.ScaleType.CENTER;
+                    break;
+                case 6:
+                    scaleType = ImageView.ScaleType.CENTER_CROP;
+                    break;
+                case 7:
+                    scaleType = ImageView.ScaleType.CENTER_INSIDE;
+                    break;
+                default:
+                    scaleType = ImageView.ScaleType.MATRIX;
+                    break;
+            }
+            setIconScaleType(scaleType);
         }
         if (iconBackgroundRes != -1) {
             setIconBackgroundResource(iconBackgroundRes);
@@ -232,12 +256,17 @@ public class NavigationItem extends ViewGroup {
         }
     }
 
-    public void setImageDrawable(Drawable drawable) {
+    public void setIconDrawable(Drawable drawable) {
         mIconV.setImageDrawable(drawable);
     }
 
-    public void setImageResource(int resId) {
+    public void setIconResource(int resId) {
         mIconV.setImageResource(resId);
+
+    }
+
+    public void setIconScaleType(ImageView.ScaleType scaleType) {
+        mIconV.setScaleType(scaleType);
     }
 
     public void setIconBackground(Drawable drawable) {
@@ -274,12 +303,16 @@ public class NavigationItem extends ViewGroup {
             mTextV.setText(text);
     }
 
-    public void setText(int resid) {
-        mTextV.setText(resid);
+    public void setText(int resId) {
+        mTextV.setText(resId);
     }
 
     public void setTextColor(ColorStateList colors) {
         mTextV.setTextColor(colors);
+    }
+
+    public void setTextColor(int color) {
+        mTextV.setTextColor(color);
     }
 
     public void setTextSize(float size) {
