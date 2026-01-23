@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- font sizes（文字尺寸） -->
+    <!--  文字尺寸 - 微小的  -->
+    <dimen name="font_tiny">8sp</dimen>
+    <!--  文字尺寸 - 最小的  -->
+    <dimen name="font_smallest">10sp</dimen>
+    <!--  文字尺寸 - 更小的  -->
+    <dimen name="font_smaller">12sp</dimen>
+    <!--  文字尺寸 - 稍小的  -->
+    <dimen name="font_small">14sp</dimen>
+    <!--  文字尺寸 - 正常的  -->
+    <dimen name="font_normal">15sp</dimen>
+    <!--  文字尺寸 - 稍大的  -->
+    <dimen name="font_large">16sp</dimen>
+    <!--  文字尺寸 - 更大的  -->
+    <dimen name="font_larger">18sp</dimen>
+    <!--  文字尺寸 - 最大的  -->
+    <dimen name="font_largest">20sp</dimen>
+    <!--  文字尺寸 - 巨大的  -->
+    <dimen name="font_huge">24sp</dimen>
+    <!--  文字尺寸 - 更巨大的  -->
+    <dimen name="font_huger">28sp</dimen>
+    <!--  文字尺寸 - 最巨大的  -->
+    <dimen name="font_hugest">32sp</dimen>
+
+
+    <!-- 典型间距（padding、margin尺寸） -->
+    <!--  间距 - 最微小的  -->
+    <dimen name="spacing_tiniest">2dp</dimen>
+    <!--  间距 - 较微小的  -->
+    <dimen name="spacing_tinier">4dp</dimen>
+    <!--  间距 - 微小的  -->
+    <dimen name="spacing_tiny">6dp</dimen>
+    <!--  间距 - 最小的  -->
+    <dimen name="spacing_smallest">8dp</dimen>
+    <!--  间距 - 更小的  -->
+    <dimen name="spacing_smaller">10dp</dimen>
+    <!--  间距 - 稍小的  -->
+    <dimen name="spacing_small">12dp</dimen>
+    <!--  间距 - 普通的  -->
+    <dimen name="spacing_normal">14dp</dimen>
+    <!--  间距 - 稍大的  -->
+    <dimen name="spacing_large">16dp</dimen>
+    <!--  间距 - 更大的  -->
+    <dimen name="spacing_larger">20dp</dimen>
+    <!--  间距 - 最大的  -->
+    <dimen name="spacing_largest">24dp</dimen>
+    <!--  间距 - 巨大的  -->
+    <dimen name="spacing_huge">28dp</dimen>
+    <!--  间距 - 更巨大的  -->
+    <dimen name="spacing_huger">32dp</dimen>
+    <!--  间距 - 最巨大的  -->
+    <dimen name="spacing_hugest">40dp</dimen>
+
+</resources>

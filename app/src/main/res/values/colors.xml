@@ -9,4 +9,9 @@
     <color name="navi_selected_pressed">#FF66ccff</color>
     <color name="navi_not_select_unpressed">#FF696969</color>
     <color name="navi_not_select_pressed">#FF898989</color>
+
+    <!--  -->
+    <color name="colorDivider">#FFE1E2E1</color>
+    <color name="textGray">#FFBCBCBC</color>
+    <color name="textDarkerGray">#FF9A9A9A</color>
 </resources>

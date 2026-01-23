@@ -3,10 +3,4 @@
     <color name="windowBackground">#FFFCFDFC</color>
     <color name="windowBackgroundDark">#FFF1F2F1</color>
     <color name="swipeRefreshColor">#FFFF6666</color>
-
-    <color name="colorDivider">#FFE1E2E1</color>
-
-    <color name="textGray">#FFBCBCBC</color>
-    <color name="textDarkerGray">#FF9A9A9A</color>
-
 </resources>

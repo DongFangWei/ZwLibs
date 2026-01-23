@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/image_selector_type_camera_cue_1"
-            android:textColor="@color/textDarkerGray"
+            android:textColor="#FF9A9A9A"
             android:textSize="12sp" />
     </LinearLayout>
 

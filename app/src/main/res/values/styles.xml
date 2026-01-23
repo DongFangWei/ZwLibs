@@ -1,4 +1,20 @@
 <resources>
+    <!-- Base application theme. -->
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="actionBarSize">@dimen/actionBarSize</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+    </style>
+
+    <!-- 使用style方式定义activity切换动画 -->
+    <style name="ActivityAnim">
+        <item name="android:activityOpenEnterAnimation">@anim/push_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/push_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
+    </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -6,10 +22,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ViewStyle.Shadow" parent="" />
+
     <style name="ViewStyle.Shadow.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Base.TextAppearance" parent="" />
 
@@ -20,7 +39,7 @@
     </style>
 
     <style name="TextAppearance.Least" parent="Base.TextAppearance">
-        <item name="android:textSize">@dimen/font_least</item>
+        <item name="android:textSize">@dimen/font_smallest</item>
     </style>
 
     <style name="TextAppearance.Smaller" parent="Base.TextAppearance">

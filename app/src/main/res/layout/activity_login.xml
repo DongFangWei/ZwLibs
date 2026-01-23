@@ -64,10 +64,10 @@
 <!--        android:id="@+id/task_play_va_lsb"-->
 <!--        android:layout_width="0dp"-->
 <!--        android:layout_height="20dp"-->
-<!--        android:layout_marginStart="@dimen/spacing_normal"-->
-<!--        android:layout_marginEnd="@dimen/spacing_normal"-->
+<!--        android:layout_marginStart="@dimen/spacing_small"-->
+<!--        android:layout_marginEnd="@dimen/spacing_small"-->
 <!--        android:max="15"-->
-<!--        android:layout_marginTop="@dimen/spacing_normal"-->
+<!--        android:layout_marginTop="@dimen/spacing_small"-->
 <!--        android:progress="1"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->

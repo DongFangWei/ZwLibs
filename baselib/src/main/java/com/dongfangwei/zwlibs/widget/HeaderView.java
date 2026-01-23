@@ -106,8 +106,6 @@ public class HeaderView extends ViewGroup {
         if (menuShow) {
             if (menuIcon == null) {
                 menuIcon = ContextCompat.getDrawable(context, R.drawable.selector_btn_more_vert);
-                if (menuPadding == -1)
-                    menuPadding = context.getResources().getDimensionPixelOffset(R.dimen.spacing_least);
             }
             initMenuView();
             setMenuIcon(menuIcon);
@@ -203,7 +201,7 @@ public class HeaderView extends ViewGroup {
 
     /**
      * 设置菜单点击事件
-     * 菜单的id为{@link R.id.headerMenu}
+     * 菜单的id为{@link R.id#headerMenu}
      */
     private void initMenuView() {
         if (mMenuView == null) {

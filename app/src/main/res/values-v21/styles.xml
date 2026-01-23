@@ -6,4 +6,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
     </style>
+
+    <style name="ViewStyle.Shadow" parent="">
+        <item name="android:elevation">2dp</item>
+    </style>
 </resources>

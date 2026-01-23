@@ -1,6 +1,0 @@
-<resources>
-
-    <style name="ViewStyle.Shadow" parent="">
-        <item name="android:elevation">2dp</item>
-    </style>
-</resources>
