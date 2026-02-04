@@ -29,26 +29,26 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
      *
      * @see #onLoadComplete(boolean)
      */
-    static final int LOAD_STATE_IDLE = 0;
+    protected static final int LOAD_STATE_IDLE = 0;
     /**
      * 加载中
      *
      * @see #isRefreshing()
      * @see #onLoad()
      */
-    static final int LOAD_STATE_LOADING = 1;
+    protected static final int LOAD_STATE_LOADING = 1;
     /**
      * 加载完成（已经加载完了全部数据）
      *
      * @see #onLoadComplete(boolean)
      */
-    static final int LOAD_STATE_LOADED = 2;
+    protected static final int LOAD_STATE_LOADED = 2;
     /**
      * 加载出错（没有成功加载数据，并不是没有数据可加载）
      *
      * @see #onLoadError()
      */
-    static final int LOAD_STATE_ERROR = 4;
+    protected static final int LOAD_STATE_ERROR = 4;
 
     /**
      * 开启或者关闭加载更多功能
@@ -143,7 +143,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
      * @param context 上下文
      * @param a       样式
      */
-    private void init(Context context, TypedArray a) {
+    protected void init(Context context, TypedArray a) {
         mLoadTextNull = a.getString(R.styleable.AutoRecyclerView_loadTextNull);
         if (mLoadTextNull == null) {
             mLoadTextNull = context.getString(R.string.no_data);
@@ -287,17 +287,11 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 根据状态变更显示
      */
-    private void onChangeStatus() {
+    protected void onChangeStatus() {
         if (isNullData()) {
             hideRecyclerView();
             showLoadErrorView();
-            if (mLoadState == LOAD_STATE_ERROR) {
-                mLoadErrorView.setErrText(mLoadTextError);
-                mLoadErrorView.setImageDrawable(mLoadImageError);
-            } else {
-                mLoadErrorView.setErrText(mLoadTextNull);
-                mLoadErrorView.setImageDrawable(mLoadImageNull);
-            }
+            changLoadErrorView();
         } else {
             showRecyclerView();
             hideLoadErrorView();
@@ -306,11 +300,24 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     }
 
     /**
+     * 改变加载错误信息显示组件
+     */
+    protected void changLoadErrorView() {
+        if (mLoadState == LOAD_STATE_ERROR) {
+            mLoadErrorView.setErrText(mLoadTextError);
+            mLoadErrorView.setImageDrawable(mLoadImageError);
+        } else {
+            mLoadErrorView.setErrText(mLoadTextNull);
+            mLoadErrorView.setImageDrawable(mLoadImageNull);
+        }
+    }
+
+    /**
      * 当前是否没有数据
      *
      * @return 是：true
      */
-    private boolean isNullData() {
+    protected boolean isNullData() {
         return mAdapter == null || mAdapter.isEmptyData();
     }
 
@@ -369,6 +376,14 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
         }
     }
 
+    public int getLoadState() {
+        return mLoadState;
+    }
+
+    protected void setLoadState(int mLoadState) {
+        this.mLoadState = mLoadState;
+    }
+
     /**
      * 是否自动回到顶部
      */
@@ -411,7 +426,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 显示RecyclerView
      */
-    private void showRecyclerView() {
+    protected void showRecyclerView() {
         if (mRecyclerView.getVisibility() != VISIBLE) {
             mRecyclerView.setVisibility(VISIBLE);
         }
@@ -420,7 +435,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 隐藏RecyclerView
      */
-    private void hideRecyclerView() {
+    protected void hideRecyclerView() {
         if (mRecyclerView.getVisibility() == VISIBLE) {
             mRecyclerView.setVisibility(GONE);
         }
@@ -461,7 +476,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 显示加载提示view
      */
-    private void showLoadErrorView() {
+    protected void showLoadErrorView() {
         if (mLoadErrorView == null) {
             initLoadErrorView();
         } else if (mLoadErrorView.getVisibility() != VISIBLE) {
@@ -472,7 +487,7 @@ public class AutoRecyclerView extends SwipeRefreshLayout {
     /**
      * 隐藏加载提示view
      */
-    private void hideLoadErrorView() {
+    protected void hideLoadErrorView() {
         if (mLoadErrorView != null && mLoadErrorView.getVisibility() == VISIBLE) {
             mLoadErrorView.setVisibility(GONE);
         }

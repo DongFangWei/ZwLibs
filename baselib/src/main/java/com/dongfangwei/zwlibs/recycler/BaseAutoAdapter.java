@@ -132,7 +132,7 @@ public abstract class BaseAutoAdapter extends BaseAdapter<BaseViewHolder> implem
 
     protected abstract int getItemType(int position);
 
-    void setLoadedState(int loadedState) {
+    protected void setLoadedState(int loadedState) {
         if (this.mLoadedState != loadedState) {
             this.mLoadedState = loadedState;
         }

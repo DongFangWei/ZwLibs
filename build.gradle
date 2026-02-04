@@ -4,10 +4,23 @@ buildscript {
     repositories {
         google()
         maven { url 'https://maven.aliyun.com/repository/public' }
+        maven {
+            //加载资源
+            Properties properties = new Properties()
+            InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            properties.load(inputStream)
 
+            // 配置仓库路径
+            url properties.getProperty('repo.url')
+            // 配置仓库凭证（用户名、密码）
+            credentials {
+                username properties.getProperty('repo.username')
+                password properties.getProperty('repo.password')
+            }
+        }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "com.android.tools.build:gradle:7.4.2"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -15,6 +28,16 @@ buildscript {
 
 ext {
     sourceCompatibility = JavaVersion.VERSION_17
+
+    // SDK版本信息
+    sdkVersion = [
+            compile: 33,
+            min    : 21,
+            target : 33
+    ]
+    // 版本信息
+    version_code = 7
+    version_name = '1.0.6'
 }
 
 allprojects {
@@ -22,15 +45,17 @@ allprojects {
         google()
         maven { url 'https://maven.aliyun.com/repository/public' }
     }
-    tasks.withType(Javadoc) {
-        options {
-            encoding "UTF-8"
-            charSet 'UTF-8'
-            links "http://docs.oracle.com/javase/7/docs/api"
+    tasks.withType(Javadoc).tap {
+        configureEach {
+            options {
+                encoding "UTF-8"
+                charSet 'UTF-8'
+                links "http://docs.oracle.com/javase/7/docs/api"
+            }
         }
     }
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -23,6 +24,11 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     protected Context getContext() {
         return this.itemView.getContext();
+    }
+
+    @NonNull
+    protected String getString(@StringRes int resId) {
+        return getContext().getString(resId);
     }
 
     public void setPosition(int position) {

@@ -1,13 +1,15 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 31
+    namespace = "com.dongfangwei.zwlibs.widget"
+    compileSdk sdkVersion.compile
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0.0"
+        minSdk sdkVersion.min
+        targetSdk sdkVersion.target
+        versionCode version_code
+        versionName version_name
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,8 +31,44 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+tasks.register('generateSourcesJar', Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.dongfangwei'
+                artifactId = 'zwlibs-widget'
+                version = version_name
+            }
+        }
+        repositories {
+            maven {
+                //加载资源
+                Properties properties = new Properties()
+                InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream();
+                properties.load(inputStream)
+
+                // 配置仓库路径
+                url = properties.getProperty("repo.url")
+                // 配置仓库凭证（用户名、密码）
+                credentials {
+                    // 配置用户名
+                    username = properties.getProperty("repo.username")
+                    // 配置密码
+                    password = properties.getProperty("repo.password")
+                }
+            }
+        }
+    }
 }

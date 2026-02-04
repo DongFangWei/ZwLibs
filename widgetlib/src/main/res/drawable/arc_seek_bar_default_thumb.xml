@@ -14,9 +14,9 @@
         android:right="2dp"
         android:top="2dp" />
     <item
-        android:bottom="4dp"
+        android:bottom="3dp"
         android:drawable="@drawable/arc_seek_bar_selector_default_thumb_focused"
-        android:left="4dp"
-        android:right="4dp"
-        android:top="4dp" />
+        android:left="3dp"
+        android:right="3dp"
+        android:top="3dp" />
 </layer-list>
